@@ -227,9 +227,8 @@ footer{padding:32px 0;background:#04131f;border-top:1px solid var(--line)}
 <div class="video-card">
 <div class="video-icon">▶️</div>
 <h2 class="section-title" data-en="Watch the Aqua Explorer Presentation" data-bn="Aqua Explorer-এর উপস্থাপনা দেখুন">Watch the Aqua Explorer Presentation</h2>
-<p data-en="Discover the purpose of this project, the water challenges it explores and the ideas behind its solutions. The presentation video will be available here." data-bn="এই প্রকল্পের উদ্দেশ্য, পানিসংক্রান্ত সমস্যাগুলো এবং সমাধানের ধারণাগুলো সম্পর্কে জানুন। প্রকল্পের ভিডিও উপস্থাপনা এখানে দেখা যাবে।">Discover the purpose of this project, the water challenges it explores and the ideas behind its solutions. The presentation video will be available here.</p>
-<a href="#" class="btn btn-primary" id="videoButton" target="_blank" rel="noopener noreferrer" data-en="▶ Watch Project Presentation" data-bn="▶ প্রকল্পের ভিডিও দেখুন">▶ Watch Project Presentation</a>
-<p class="small-note" data-en="The presentation video will be added soon." data-bn="ভিডিও উপস্থাপনাটি শিগগিরই যুক্ত করা হবে।">The presentation video will be added soon.</p>
+<p data-en="Discover the purpose of this project, the water challenges it explores and the ideas behind its solutions." data-bn="এই প্রকল্পের উদ্দেশ্য, পানিসংক্রান্ত সমস্যাগুলো এবং সমাধানের ধারণাগুলো সম্পর্কে জানুন।">Discover the purpose of this project, the water challenges it explores and the ideas behind its solutions.</p>
+<a href="#" class="btn btn-primary" id="videoButton" style="display:none" target="_blank" rel="noopener noreferrer" data-en="▶ Watch Project Presentation" data-bn="▶ প্রকল্পের ভিডিও দেখুন">▶ Watch Project Presentation</a>
 </div>
 </div>
 </section>
@@ -257,25 +256,25 @@ footer{padding:32px 0;background:#04131f;border-top:1px solid var(--line)}
 <!-- AQUA AI -->
 <section class="ai-section" id="ai">
 <div class="container">
-<div class="eyebrow" data-en="06 / LOCAL AI ASSISTANT" data-bn="০৬ / লোকাল AI অ্যাসিস্ট্যান্ট">06 / LOCAL AI ASSISTANT</div>
+<div class="eyebrow" data-en="06 / HYBRID AI ASSISTANT" data-bn="০৬ / হাইব্রিড AI অ্যাসিস্ট্যান্ট">06 / HYBRID AI ASSISTANT</div>
 <h2 class="section-title" data-en="Meet Aqua AI" data-bn="পরিচিত হোন Aqua AI-এর সঙ্গে">Meet Aqua AI</h2>
-<p class="section-subtitle" data-en="Ask questions about water quantity, freshwater availability, groundwater and water scarcity. The language model runs locally in your browser." data-bn="পানির পরিমাণ, মিঠাপানির প্রাপ্যতা, ভূগর্ভস্থ পানি ও পানির সংকট নিয়ে প্রশ্ন করুন। AI মডেলটি আপনার ব্রাউজারেই চলবে।">Ask questions about water quantity, freshwater availability, groundwater and water scarcity. The language model runs locally in your browser.</p>
+<p class="section-subtitle" data-en="Ask questions about water quantity, freshwater availability, groundwater and water scarcity. Aqua AI first tries to run locally on your device and automatically switches to cloud AI when needed." data-bn="পানির পরিমাণ, মিঠাপানির প্রাপ্যতা, ভূগর্ভস্থ পানি ও পানির সংকট নিয়ে প্রশ্ন করুন। Aqua AI প্রথমে আপনার ডিভাইসে চলার চেষ্টা করবে এবং প্রয়োজন হলে স্বয়ংক্রিয়ভাবে Cloud AI ব্যবহার করবে।">Ask questions about water quantity, freshwater availability, groundwater and water scarcity. Aqua AI first tries to run locally on your device and automatically switches to cloud AI when needed.</p>
 <div class="ai-box">
 <div class="ai-top">
 <div class="ai-avatar">💧</div>
 <div><h3>Aqua AI Assistant</h3><div class="ai-status" id="aiStatus"><span class="status-dot"></span><span data-en="Not loaded yet" data-bn="এখনো চালু করা হয়নি">Not loaded yet</span></div></div>
 </div>
-<div class="ai-warning" data-en="This AI runs on your device using WebGPU. The first setup downloads a language model and may use substantial data and memory. A compatible browser and capable device are required. AI answers can be inaccurate; verify important facts with trusted sources." data-bn="এই AI WebGPU ব্যবহার করে আপনার ডিভাইসে চলে। প্রথমবার ভাষার মডেল ডাউনলোড হবে, এতে অনেক ডেটা ও মেমোরি লাগতে পারে। উপযুক্ত ব্রাউজার ও সক্ষম ডিভাইস প্রয়োজন। AI-এর উত্তর ভুল হতে পারে; গুরুত্বপূর্ণ তথ্য নির্ভরযোগ্য উৎস থেকে যাচাই করুন।">This AI runs on your device using WebGPU. The first setup downloads a language model and may use substantial data and memory. A compatible browser and capable device are required. AI answers can be inaccurate; verify important facts with trusted sources.</div>
+<div class="ai-warning" data-en="Aqua AI uses WebGPU on compatible devices. The first local setup downloads a language model and may use substantial data and memory. If local AI is unavailable or fails, it can use the configured Cloud AI service. Cloud AI requires an internet connection and may be subject to usage limits or charges. AI answers can be inaccurate; verify important facts with trusted sources." data-bn="সক্ষম ডিভাইসে Aqua AI WebGPU ব্যবহার করে। প্রথমবার লোকাল মডেল ডাউনলোড হতে পারে এবং এতে অনেক ডেটা ও মেমোরি লাগতে পারে। লোকাল AI কাজ না করলে কনফিগার করা Cloud AI ব্যবহার করা হবে। Cloud AI-এর জন্য ইন্টারনেট প্রয়োজন এবং ব্যবহারের সীমা বা চার্জ থাকতে পারে। AI-এর উত্তর ভুল হতে পারে; গুরুত্বপূর্ণ তথ্য নির্ভরযোগ্য উৎস থেকে যাচাই করুন।">Aqua AI uses WebGPU on compatible devices. The first local setup downloads a language model and may use substantial data and memory. If local AI is unavailable or fails, it can use the configured Cloud AI service. Cloud AI requires an internet connection and may be subject to usage limits or charges. AI answers can be inaccurate; verify important facts with trusted sources.</div>
 <div class="ai-controls">
-<button class="btn btn-primary" id="loadAI"><span data-en="Load Aqua AI Model" data-bn="Aqua AI চালু করুন">Load Aqua AI Model</span></button>
-<button class="btn btn-muted" id="clearChat"><span data-en="Clear Chat" data-bn="চ্যাট মুছুন">Clear Chat</span></button>
+<button class="btn btn-primary" id="loadAI" type="button"><span data-en="Start Aqua AI" data-bn="Aqua AI চালু করুন">Start Aqua AI</span></button>
+<button class="btn btn-muted" id="clearChat" type="button"><span data-en="Clear Chat" data-bn="চ্যাট মুছুন">Clear Chat</span></button>
 </div>
 <div class="progress-wrap">
 <div class="progress-track"><div class="progress-fill" id="aiProgress"></div></div>
-<div class="progress-text" id="progressText">Waiting to load the AI model...</div>
+<div class="progress-text" id="progressText">Waiting to start Aqua AI...</div>
 </div>
 <div class="chat-window" id="chatWindow" aria-live="polite">
-<div class="chat-message"><div class="chat-bubble" data-en="Hello! I am Aqua AI. Load the local model to begin asking questions about Water Quantity." data-bn="স্বাগতম! আমি Aqua AI। Water Quantity সম্পর্কে প্রশ্ন করতে প্রথমে লোকাল AI মডেলটি চালু করুন।">Hello! I am Aqua AI. Load the local model to begin asking questions about Water Quantity.</div></div>
+<div class="chat-message"><div class="chat-bubble" data-en="Hello! I am Aqua AI. Select Start Aqua AI to begin asking questions about Water Quantity." data-bn="স্বাগতম! আমি Aqua AI। Water Quantity সম্পর্কে প্রশ্ন করতে Aqua AI চালু করুন।">Hello! I am Aqua AI. Select Start Aqua AI to begin asking questions about Water Quantity.</div></div>
 </div>
 <form id="chatForm">
 <div class="chat-input-row">
@@ -331,6 +330,12 @@ function setLanguage(language){
   questionInput.placeholder = language === "en"
     ? "Ask a question about Water Quantity..."
     : "পানির পরিমাণ সম্পর্কে প্রশ্ন করুন...";
+
+  if(!loadingAI && !aiMode){
+    progressText.textContent = language === "bn"
+      ? "Aqua AI চালু করার অপেক্ষায়..."
+      : "Waiting to start Aqua AI...";
+  }
 }
 languageToggle.addEventListener("click",()=>{
   setLanguage(currentLanguage === "en" ? "bn" : "en");
@@ -338,27 +343,33 @@ languageToggle.addEventListener("click",()=>{
 
 /* =========================================
    2. YOUTUBE VIDEO LINK
+   Add your YouTube URL inside the quotes.
 ========================================= */
 const YOUTUBE_VIDEO_URL = "";
 
-document.getElementById("videoButton").addEventListener("click",function(event){
-  event.preventDefault();
-  if(!YOUTUBE_VIDEO_URL.trim()){
-    alert(currentLanguage === "en"
-      ? "The project presentation video has not been added yet. Please check back later."
-      : "প্রকল্পের ভিডিও এখনো যুক্ত করা হয়নি। পরে আবার দেখুন।");
-    return;
-  }
-  window.open(YOUTUBE_VIDEO_URL,"_blank","noopener,noreferrer");
-});
+const videoButton = document.getElementById("videoButton");
+
+if(YOUTUBE_VIDEO_URL.trim()){
+  videoButton.href = YOUTUBE_VIDEO_URL.trim();
+  videoButton.style.display = "inline-flex";
+}else{
+  videoButton.style.display = "none";
+}
 
 /* =========================================
-   3. AQUA AI — REAL LOCAL LANGUAGE MODEL
-   WebLLM + Llama 3.2 1B
-   No API key. No paid AI API.
+   3. AQUA AI — HYBRID AI SYSTEM
+
+   Priority 1: Local WebGPU AI
+   Fallback: Cloudflare Workers AI
+
+   The Cloudflare Worker URL goes below.
+   Do not put any API key in this HTML file.
 ========================================= */
 
 const MODEL_ID = "Llama-3.2-1B-Instruct-q4f16_1-MLC";
+
+/* Replace this URL after deploying your Cloudflare Worker. */
+const CLOUD_AI_URL = "https://YOUR-WORKER-NAME.YOUR-SUBDOMAIN.workers.dev";
 
 const loadButton = document.getElementById("loadAI");
 const clearButton = document.getElementById("clearChat");
@@ -371,17 +382,27 @@ const userQuestion = document.getElementById("userQuestion");
 const sendButton = document.getElementById("sendQuestion");
 
 let engine = null;
+let aiMode = null;
 let loadingAI = false;
 let isGenerating = false;
 let chatHistory = [];
 
 function setStatus(message){
   statusElement.replaceChildren();
+
   const dot = document.createElement("span");
   dot.className = "status-dot";
+
   const text = document.createElement("span");
   text.textContent = message;
+
   statusElement.append(dot,text);
+}
+
+function setProgress(percent,message){
+  const safePercent = Math.max(0,Math.min(100,percent));
+  progressBar.style.width = safePercent + "%";
+  progressText.textContent = message;
 }
 
 function addMessage(message,role){
@@ -395,6 +416,7 @@ function addMessage(message,role){
   wrapper.appendChild(bubble);
   chatWindow.appendChild(wrapper);
   chatWindow.scrollTop = chatWindow.scrollHeight;
+
   return bubble;
 }
 
@@ -456,35 +478,119 @@ You are not an official government monitoring service.
   `;
 }
 
-function setProgress(percent,message){
-  const safePercent = Math.max(0,Math.min(100,percent));
-  progressBar.style.width = safePercent + "%";
-  progressText.textContent = message;
+function cloudUrlIsConfigured(){
+  return CLOUD_AI_URL.startsWith("https://") &&
+    !CLOUD_AI_URL.includes("YOUR-WORKER-NAME") &&
+    !CLOUD_AI_URL.includes("YOUR-SUBDOMAIN");
+}
+
+function enableChat(){
+  userQuestion.disabled = false;
+  sendButton.disabled = false;
+  userQuestion.focus();
+}
+
+function disableChat(){
+  userQuestion.disabled = true;
+  sendButton.disabled = true;
+}
+
+async function checkCloudService(){
+  if(!cloudUrlIsConfigured()){
+    throw new Error(
+      currentLanguage === "bn"
+        ? "Cloud AI Worker URL এখনো সেট করা হয়নি। Cloud fallback চালাতে HTML-এর CLOUD_AI_URL-এ Worker URL বসান।"
+        : "Cloud AI Worker URL has not been configured. Add your deployed Worker URL to CLOUD_AI_URL in this HTML file."
+    );
+  }
+
+  const response = await fetch(CLOUD_AI_URL.replace(/\/+$/,"") + "/health",{
+    method:"GET",
+    headers:{"Accept":"application/json"}
+  });
+
+  if(!response.ok){
+    throw new Error("Cloud AI service is not responding. HTTP " + response.status);
+  }
+
+  const data = await response.json();
+
+  if(!data || data.status !== "ok"){
+    throw new Error("Cloud AI service health check failed.");
+  }
+
+  return true;
+}
+
+async function switchToCloud(reason){
+  engine = null;
+  aiMode = null;
+
+  setStatus(currentLanguage === "bn"
+    ? "Cloud AI প্রস্তুত করা হচ্ছে..."
+    : "Preparing Cloud AI...");
+
+  setProgress(0,currentLanguage === "bn"
+    ? "Cloud AI সংযোগ পরীক্ষা করা হচ্ছে..."
+    : "Checking Cloud AI connection...");
+
+  if(reason){
+    console.warn("Switching to Cloud AI:",reason);
+  }
+
+  await checkCloudService();
+
+  aiMode = "cloud";
+  setProgress(100,currentLanguage === "bn"
+    ? "Cloud AI প্রস্তুত!"
+    : "Cloud AI is ready!");
+
+  setStatus(currentLanguage === "bn"
+    ? "প্রস্তুত — Cloud AI"
+    : "Ready — Cloud AI");
+
+  enableChat();
+
+  addMessage(
+    currentLanguage === "bn"
+      ? "লোকাল AI এই ডিভাইসে চালু করা যায়নি। Aqua AI এখন Cloud AI ব্যবহার করছে।"
+      : "Local AI could not run on this device. Aqua AI is now using Cloud AI.",
+    "assistant"
+  );
 }
 
 async function loadLocalAI(){
-  if(engine || loadingAI) return;
+  if(engine || loadingAI || aiMode) return;
 
   loadingAI = true;
   loadButton.disabled = true;
-  setStatus(currentLanguage === "bn" ? "AI প্রস্তুত হচ্ছে..." : "Preparing AI...");
-  setProgress(0,currentLanguage === "bn" ? "ব্রাউজার পরীক্ষা করা হচ্ছে..." : "Checking browser support...");
+  disableChat();
+
+  setStatus(currentLanguage === "bn"
+    ? "AI প্রস্তুত হচ্ছে..."
+    : "Preparing AI...");
+
+  setProgress(0,currentLanguage === "bn"
+    ? "ব্রাউজার পরীক্ষা করা হচ্ছে..."
+    : "Checking browser support...");
 
   try{
     if(!window.isSecureContext){
-      throw new Error("A secure HTTPS connection is required. Open this website through GitHub Pages HTTPS.");
+      throw new Error("A secure HTTPS connection is required.");
     }
 
     if(!navigator.gpu){
-      throw new Error("WebGPU is not available in this browser or device. Aqua AI requires a WebGPU-compatible browser and supported graphics hardware.");
+      throw new Error("WebGPU is not available on this device or browser.");
     }
 
-    setProgress(2,currentLanguage === "bn" ? "WebLLM লাইব্রেরি লোড হচ্ছে..." : "Loading the WebLLM library...");
+    setProgress(2,currentLanguage === "bn"
+      ? "WebLLM লাইব্রেরি লোড হচ্ছে..."
+      : "Loading the WebLLM library...");
 
     const webllm = await import("https://esm.run/@mlc-ai/web-llm");
 
     if(!webllm || typeof webllm.CreateMLCEngine !== "function"){
-      throw new Error("The WebLLM library could not be initialized. Please check your internet connection and try again.");
+      throw new Error("The WebLLM library could not be initialized.");
     }
 
     const modelExists = webllm.prebuiltAppConfig.model_list.some(
@@ -492,10 +598,12 @@ async function loadLocalAI(){
     );
 
     if(!modelExists){
-      throw new Error("The selected AI model is not available in the loaded WebLLM version.");
+      throw new Error("The selected AI model is not available in this WebLLM version.");
     }
 
-    setProgress(3,currentLanguage === "bn" ? "AI মডেল ডাউনলোড ও প্রস্তুত হচ্ছে..." : "Downloading and preparing the AI model...");
+    setProgress(3,currentLanguage === "bn"
+      ? "AI মডেল ডাউনলোড ও প্রস্তুত হচ্ছে..."
+      : "Downloading and preparing the AI model...");
 
     engine = await webllm.CreateMLCEngine(MODEL_ID,{
       initProgressCallback:(progress)=>{
@@ -509,53 +617,97 @@ async function loadLocalAI(){
       }
     });
 
-    setProgress(100,currentLanguage === "bn" ? "Aqua AI প্রস্তুত!" : "Aqua AI is ready!");
+    aiMode = "local";
+
+    setProgress(100,currentLanguage === "bn"
+      ? "Aqua AI প্রস্তুত!"
+      : "Aqua AI is ready!");
+
     setStatus(currentLanguage === "bn"
       ? "প্রস্তুত — আপনার ডিভাইসে চলছে"
       : "Ready — running locally on your device");
 
-    userQuestion.disabled = false;
-    sendButton.disabled = false;
-    loadButton.disabled = true;
-    userQuestion.focus();
+    enableChat();
 
     addMessage(
       currentLanguage === "bn"
-        ? "Aqua AI এখন প্রস্তুত! পানির পরিমাণ, মিঠাপানি, ভূগর্ভস্থ পানি ও পানির সংকট সম্পর্কে প্রশ্ন করুন।"
-        : "Aqua AI is ready! Ask me about Earth's water, freshwater, groundwater and water scarcity.",
+        ? "Aqua AI এখন আপনার ডিভাইসে প্রস্তুত! পানির পরিমাণ, মিঠাপানি, ভূগর্ভস্থ পানি ও পানির সংকট সম্পর্কে প্রশ্ন করুন।"
+        : "Aqua AI is ready and running locally on your device! Ask me about Earth's water, freshwater, groundwater and water scarcity.",
       "assistant"
     );
 
   }catch(error){
-    console.error("Aqua AI loading error:",error);
+    console.error("Local Aqua AI error:",error);
+
     engine = null;
 
-    setStatus(currentLanguage === "bn" ? "AI চালু করা যায়নি" : "AI could not be loaded");
-    setProgress(0,error.message || "An unexpected error occurred while loading the AI model.");
+    try{
+      await switchToCloud(error.message);
+    }catch(cloudError){
+      console.error("Cloud fallback error:",cloudError);
 
-    addMessage(
-      currentLanguage === "bn"
-        ? "Aqua AI চালু করা যায়নি। উপরের error message পড়ুন। WebGPU সমর্থন, ব্রাউজার এবং ইন্টারনেট সংযোগ পরীক্ষা করুন।"
-        : "Aqua AI could not start. Read the error message above and check WebGPU support, browser compatibility and your internet connection.",
-      "assistant"
-    );
+      aiMode = null;
+      setStatus(currentLanguage === "bn"
+        ? "AI চালু করা যায়নি"
+        : "AI could not be started");
+
+      setProgress(0,cloudError.message || "Local and Cloud AI could not be started.");
+
+      addMessage(
+        currentLanguage === "bn"
+          ? "লোকাল ও Cloud AI—কোনোটিই চালু করা যায়নি। Cloudflare Worker URL এবং ইন্টারনেট সংযোগ পরীক্ষা করুন।"
+          : "Neither Local AI nor Cloud AI could be started. Check the Cloudflare Worker URL and your internet connection.",
+        "assistant"
+      );
+    }
 
   }finally{
     loadingAI = false;
-    loadButton.disabled = !!engine;
+    loadButton.disabled = !!aiMode;
   }
 }
 
 loadButton.addEventListener("click",loadLocalAI);
 
 /* =========================================
-   SEND MESSAGE TO THE LOCAL AI MODEL
+   4. CLOUD AI REQUEST
+========================================= */
+async function askCloudAI(messages){
+  if(!cloudUrlIsConfigured()){
+    throw new Error("Cloud AI Worker URL is not configured.");
+  }
+
+  const response = await fetch(CLOUD_AI_URL.replace(/\/+$/,"") + "/chat",{
+    method:"POST",
+    headers:{
+      "Content-Type":"application/json",
+      "Accept":"application/json"
+    },
+    body:JSON.stringify({messages})
+  });
+
+  const data = await response.json().catch(()=>({}));
+
+  if(!response.ok){
+    throw new Error(data.error || "Cloud AI request failed. HTTP " + response.status);
+  }
+
+  if(!data.response || typeof data.response !== "string"){
+    throw new Error("Cloud AI returned an invalid response.");
+  }
+
+  return data.response;
+}
+
+/* =========================================
+   5. SEND MESSAGE — LOCAL FIRST, CLOUD FALLBACK
 ========================================= */
 chatForm.addEventListener("submit",async(event)=>{
   event.preventDefault();
 
   const question = userQuestion.value.trim();
-  if(!question || !engine || isGenerating) return;
+
+  if(!question || !aiMode || isGenerating) return;
 
   isGenerating = true;
   userQuestion.value = "";
@@ -571,20 +723,62 @@ chatForm.addEventListener("submit",async(event)=>{
 
   chatHistory.push({role:"user",content:question});
 
-  // Keep recent conversation context.
+  if(chatHistory.length > 12){
+    chatHistory = chatHistory.slice(-12);
+  }
+
   const recentMessages = chatHistory.slice(-8);
 
   try{
-    const response = await engine.chat.completions.create({
-      messages:[
-        {role:"system",content:getSystemPrompt()},
-        ...recentMessages
-      ],
-      temperature:0.5,
-      max_tokens:450
-    });
+    let answer = "";
 
-    const answer = response.choices?.[0]?.message?.content;
+    if(aiMode === "local" && engine){
+      try{
+        const response = await engine.chat.completions.create({
+          messages:[
+            {role:"system",content:getSystemPrompt()},
+            ...recentMessages
+          ],
+          temperature:0.5,
+          max_tokens:450
+        });
+
+        answer = response.choices?.[0]?.message?.content || "";
+
+        if(!answer){
+          throw new Error("The local AI returned an empty response.");
+        }
+
+      }catch(localError){
+        console.error("Local AI generation failed:",localError);
+
+        answerBubble.textContent = currentLanguage === "bn"
+          ? "লোকাল AI উত্তর তৈরি করতে পারেনি। Cloud AI-তে পরিবর্তন করা হচ্ছে..."
+          : "Local AI could not generate an answer. Switching to Cloud AI...";
+
+        setStatus(currentLanguage === "bn"
+          ? "Cloud AI-তে পরিবর্তন হচ্ছে..."
+          : "Switching to Cloud AI...");
+
+        engine = null;
+        aiMode = null;
+
+        await checkCloudService();
+        aiMode = "cloud";
+
+        answer = await askCloudAI(recentMessages);
+
+        setStatus(currentLanguage === "bn"
+          ? "প্রস্তুত — Cloud AI"
+          : "Ready — Cloud AI");
+
+      }
+
+    }else if(aiMode === "cloud"){
+      answer = await askCloudAI(recentMessages);
+    }else{
+      throw new Error("Aqua AI is not ready.");
+    }
 
     if(!answer){
       throw new Error("The AI returned an empty response.");
@@ -601,18 +795,26 @@ chatForm.addEventListener("submit",async(event)=>{
     console.error("Aqua AI response error:",error);
 
     answerBubble.textContent = currentLanguage === "bn"
-      ? "উত্তর তৈরি করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।"
-      : "There was a problem generating the answer. Please try again.";
+      ? "উত্তর তৈরি করতে সমস্যা হয়েছে। ইন্টারনেট সংযোগ এবং Cloud AI Worker পরীক্ষা করে আবার চেষ্টা করুন।"
+      : "There was a problem generating the answer. Check your internet connection and Cloud AI Worker, then try again.";
+
+    setStatus(currentLanguage === "bn"
+      ? "সংযোগে সমস্যা"
+      : "Connection problem");
+
   }finally{
     isGenerating = false;
-    userQuestion.disabled = false;
-    sendButton.disabled = false;
-    userQuestion.focus();
+    userQuestion.disabled = !aiMode;
+    sendButton.disabled = !aiMode;
+
+    if(aiMode){
+      userQuestion.focus();
+    }
   }
 });
 
 /* =========================================
-   CLEAR CHAT
+   6. CLEAR CHAT
 ========================================= */
 clearButton.addEventListener("click",()=>{
   if(isGenerating) return;
