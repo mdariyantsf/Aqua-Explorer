@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Explore | Water & Ocean SDGs</title>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --bg:#071923;
+  --panel:#0d2633;
+  --panel2:#103442;
+  --text:#eefaff;
+  --muted:#a8c3ce;
+  --cyan:#35d6d0;
+  --blue:#2699ed;
+  --border:rgba(160,220,230,.15);
+}
+
+html{scroll-behavior:smooth;scroll-padding-top:95px}
+
+body{
+  font-family:Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+}
+
+header{
+  min-height:76px;
+  padding:15px 7%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  border-bottom:1px solid var(--border);
+  background:rgba(7,25,35,.96);
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+
+.logo{
+  font-size:22px;
+  font-weight:800;
+  color:var(--cyan);
+  letter-spacing:.5px;
+}
+
+.language-btn{
+  background:var(--cyan);
+  color:#05232a;
+  border:none;
+  padding:10px 19px;
+  border-radius:25px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.hero{
+  text-align:center;
+  padding:75px 20px 45px;
+  background:
+    linear-gradient(rgba(4,24,35,.78),rgba(4,24,35,.95)),
+    url("https://images.unsplash.com/photo-1437482078695-73f5ca6c96e2?auto=format&fit=crop&w=1800&q=85");
+  background-size:cover;
+  background-position:center;
+}
+
+.eyebrow{
+  color:var(--cyan);
+  font-weight:bold;
+  letter-spacing:2px;
+  font-size:12px;
+  margin-bottom:14px;
+}
+
+.hero h1{
+  font-size:clamp(30px,5vw,53px);
+  line-height:1.15;
+  max-width:850px;
+  margin:auto;
+}
+
+.hero p{
+  color:#c5dce4;
+  max-width:700px;
+  margin:20px auto 0;
+  font-size:16px;
+}
+
+.container{width:min(1100px,90%);margin:auto}
+.section{padding:55px 0}
+
+.section-heading{
+  text-align:center;
+  margin-bottom:28px;
+}
+
+.section-heading h2{
+  font-size:clamp(24px,4vw,34px);
+  margin-bottom:10px;
+}
+
+.section-heading p{
+  color:var(--muted);
+  max-width:720px;
+  margin:auto;
+}
+
+.map-panel{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:18px;
+  box-shadow:0 15px 45px rgba(0,0,0,.2);
+}
+
+.map-instructions{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:15px;
+}
+
+.map-instructions p{color:var(--muted);font-size:14px}
+
+.location-btn{
+  background:#164c59;
+  color:white;
+  border:1px solid #287d8c;
+  padding:10px 16px;
+  border-radius:9px;
+  cursor:pointer;
+}
+
+#map{
+  height:410px;
+  width:100%;
+  border-radius:12px;
+  z-index:1;
+}
+
+.coordinates{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:12px;
+  overflow-wrap:anywhere;
+}
+
+.notice{
+  display:none;
+  margin-top:22px;
+  padding:22px;
+  border-radius:14px;
+  background:linear-gradient(120deg,#103c47,#123248);
+  border:1px solid rgba(53,214,208,.35);
+}
+
+.notice h3{
+  color:var(--cyan);
+  font-size:21px;
+  margin-bottom:8px;
+}
+
+.notice p{color:#d1e6ed;margin-top:9px}
+
+.priority{
+  display:inline-block;
+  margin-top:14px;
+  padding:7px 12px;
+  border-radius:20px;
+  background:rgba(53,214,208,.13);
+  color:#7ff4e8;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.data-heading{
+  margin-top:24px;
+  color:var(--cyan);
+  font-size:17px;
+}
+
+.data-list{
+  margin-top:12px;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+}
+
+.data-item{
+  background:rgba(3,20,29,.45);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:13px;
+  min-width:0;
+}
+
+.data-item strong{
+  display:block;
+  color:#fff;
+  font-size:13px;
+  margin-bottom:5px;
+}
+
+.data-item span{
+  display:block;
+  color:#b9d3dc;
+  font-size:13px;
+  overflow-wrap:anywhere;
+}
+
+.source-links{
+  margin-top:15px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:14px;
+}
+
+.source-links a{
+  color:var(--cyan);
+  font-size:13px;
+}
+
+.jump-area{
+  text-align:center;
+  padding:28px 10px 5px;
+}
+
+.jump-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:13px 24px;
+  border-radius:30px;
+  background:linear-gradient(120deg,#35d6d0,#2699ed);
+  color:#05232a;
+  font-weight:800;
+  text-decoration:none;
+  letter-spacing:1px;
+  box-shadow:0 8px 25px rgba(53,214,208,.18);
+  transition:.2s;
+}
+
+.jump-btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 12px 30px rgba(53,214,208,.3);
+}
+
+.jump-hint{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:9px;
+}
+
+.sdgs{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:25px;
+  margin-top:30px;
+}
+
+.sdg-card{
+  overflow:hidden;
+  border-radius:17px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  transition:.25s;
+}
+
+.sdg-card:hover{
+  transform:translateY(-6px);
+  border-color:var(--cyan);
+  box-shadow:0 15px 35px rgba(0,0,0,.25);
+}
+
+.sdg-image{height:190px;overflow:hidden}
+
+.sdg-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:.4s;
+}
+
+.sdg-card:hover img{transform:scale(1.05)}
+
+.sdg-content{padding:23px}
+
+.sdg-number{
+  font-size:12px;
+  font-weight:bold;
+  letter-spacing:1px;
+  color:var(--cyan);
+  margin-bottom:8px;
+}
+
+.sdg-content h3{font-size:23px;margin-bottom:10px}
+
+.sdg-content p{
+  color:var(--muted);
+  font-size:14px;
+  min-height:66px;
+}
+
+.explore-btn{
+  display:inline-block;
+  margin-top:20px;
+  padding:11px 19px;
+  border-radius:8px;
+  text-decoration:none;
+  color:#05232a;
+  background:var(--cyan);
+  font-weight:bold;
+  transition:.2s;
+}
+
+.explore-btn:hover{background:white}
+
+.disclaimer{
+  margin-top:22px;
+  color:#9ebac5;
+  font-size:12px;
+  line-height:1.7;
+}
+
+footer{
+  border-top:1px solid var(--border);
+  padding:25px 15px;
+  text-align:center;
+  color:var(--muted);
+  font-size:13px;
+}
+
+@media(max-width:700px){
+  header{padding:13px 5%}
+  .sdgs{grid-template-columns:1fr}
+  .data-list{grid-template-columns:1fr}
+  #map{height:340px}
+  .hero{padding:55px 17px 40px}
+  .map-panel{padding:12px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">AQUA EXPLORER</div>
+  <button class="language-btn" id="languageBtn" onclick="toggleLanguage()">বাংলা</button>
+</header>
+
+<section class="hero">
+  <div class="eyebrow"
+       data-en="EXPLORE WATER & OCEAN CHALLENGES"
+       data-bn="পানি ও সমুদ্রের সমস্যা অনুসন্ধান করুন">
+    EXPLORE WATER & OCEAN CHALLENGES
+  </div>
+
+  <h1 data-en="Discover the Water Challenges Around You"
+      data-bn="আপনার আশেপাশের পানিসংক্রান্ত সমস্যাগুলো আবিষ্কার করুন">
+    Discover the Water Challenges Around You
+  </h1>
+
+  <p data-en="Every location has a different relationship with water. Select your location to explore relevant water and marine sustainability information."
+     data-bn="প্রতিটি এলাকার পানিসংক্রান্ত চ্যালেঞ্জ আলাদা। আপনার অবস্থান নির্বাচন করে পানি ও সামুদ্রিক পরিবেশ সম্পর্কিত তথ্য অনুসন্ধান করুন।">
+    Every location has a different relationship with water. Select your location to explore relevant water and marine sustainability information.
+  </p>
+</section>
+
+<main>
+
+<section class="section">
+<div class="container">
+
+  <div class="section-heading">
+    <h2 data-en="Select Your Location" data-bn="আপনার অবস্থান নির্বাচন করুন">
+      Select Your Location
+    </h2>
+
+    <p data-en="Click anywhere on the map to select a location. You can also use your device's location if you choose to allow it."
+       data-bn="অবস্থান নির্বাচন করতে মানচিত্রের যেকোনো স্থানে ক্লিক করুন। চাইলে আপনার ডিভাইসের অবস্থান ব্যবহারের অনুমতিও দিতে পারেন।">
+      Click anywhere on the map to select a location. You can also use your device's location if you choose to allow it.
+    </p>
+  </div>
+
+  <div class="map-panel">
+
+    <div class="map-instructions">
+      <p data-en="Choose a point on the map" data-bn="মানচিত্রে একটি স্থান নির্বাচন করুন">
+        Choose a point on the map
+      </p>
+
+      <button class="location-btn" onclick="useMyLocation()"
+              data-en="◎ Use My Location"
+              data-bn="◎ আমার অবস্থান ব্যবহার করুন">
+        ◎ Use My Location
+      </button>
+    </div>
+
+    <div id="map"></div>
+
+    <div class="coordinates" id="coordinates"
+         data-en="No location selected yet."
+         data-bn="এখনো কোনো অবস্থান নির্বাচন করা হয়নি।">
+      No location selected yet.
+    </div>
+
+    <div class="notice" id="notice" aria-live="polite">
+      <h3 id="noticeTitle"></h3>
+      <p id="noticeText"></p>
+      <p id="noticeReason"></p>
+
+      <span class="priority" id="noticePriority"></span>
+
+      <h4 class="data-heading" id="dataHeading"></h4>
+      <div class="data-list" id="dataList"></div>
+
+      <div class="source-links" id="sourceLinks"></div>
+    </div>
+
+    <p class="disclaimer"
+       data-en="Important: UN SDG indicators are generally reported at national or regional level and may not represent live local measurements. A missing result does not mean that a location is clean or polluted. This page does not issue official environmental warnings."
+       data-bn="গুরুত্বপূর্ণ: জাতিসংঘের এসডিজি সূচক সাধারণত জাতীয় বা আঞ্চলিক পর্যায়ে প্রকাশিত হয়; এগুলো সরাসরি স্থানীয় বা লাইভ পরিমাপ নাও হতে পারে। কোনো তথ্য না পাওয়া মানে স্থানটি পরিষ্কার বা দূষিত—কোনোটিই নয়। এই পেজ সরকারি পরিবেশগত সতর্কতা প্রদান করে না।">
+      Important: UN SDG indicators are generally reported at national or regional level and may not represent live local measurements. A missing result does not mean that a location is clean or polluted. This page does not issue official environmental warnings.
+    </p>
+
+  </div>
+
+  <!-- BUTTON THAT JUMPS TO THE SDG CARDS -->
+  <div class="jump-area">
+    <a href="#sdg-pages" class="jump-btn">
+      <span data-en="SDG PAGES" data-bn="এসডিজি পেজসমূহ">SDG PAGES</span>
+      <span aria-hidden="true">↓</span>
+    </a>
+    <p class="jump-hint"
+       data-en="Click to jump directly to the SDG 6 and SDG 14 pages."
+       data-bn="ক্লিক করলে সরাসরি এসডিজি ৬ ও এসডিজি ১৪ পেজের বাটনগুলোতে চলে যাবেন।">
+      Click to jump directly to the SDG 6 and SDG 14 pages.
+    </p>
+  </div>
+
+</div>
+</section>
+
+<section class="section" id="sdg-pages" style="padding-top:15px">
+<div class="container">
+
+  <div class="section-heading">
+    <h2 data-en="Explore the Relevant SDGs"
+        data-bn="প্রাসঙ্গিক এসডিজিগুলো অনুসন্ধান করুন">
+      Explore the Relevant SDGs
+    </h2>
+
+    <p data-en="Explore both goals to learn about challenges, solutions, and innovations connected to freshwater and marine environments."
+       data-bn="মিঠাপানি ও সামুদ্রিক পরিবেশের সমস্যা, সমাধান এবং উদ্ভাবন সম্পর্কে জানতে দুটি লক্ষ্যই অনুসন্ধান করুন।">
+      Explore both goals to learn about challenges, solutions, and innovations connected to freshwater and marine environments.
+    </p>
+  </div>
+
+  <div class="sdgs">
+
+    <article class="sdg-card">
+      <div class="sdg-image">
+        <img src="https://images.unsplash.com/photo-1530053969600-caed2596d242?auto=format&fit=crop&w=1000&q=85"
+             alt="Freshwater river">
+      </div>
+
+      <div class="sdg-content">
+        <div class="sdg-number"
+             data-en="UNITED NATIONS SDG 06"
+             data-bn="জাতিসংঘের এসডিজি ০৬">
+          UNITED NATIONS SDG 06
+        </div>
+
+        <h3 data-en="Clean Water and Sanitation"
+            data-bn="বিশুদ্ধ পানি ও স্যানিটেশন">
+          Clean Water and Sanitation
+        </h3>
+
+        <p data-en="Explore freshwater access, water quality, sanitation, and the protection of water resources for everyone."
+           data-bn="সবার জন্য বিশুদ্ধ পানির প্রাপ্যতা, পানির গুণমান, স্যানিটেশন এবং পানিসম্পদ সংরক্ষণ সম্পর্কে জানুন।">
+          Explore freshwater access, water quality, sanitation, and the protection of water resources for everyone.
+        </p>
+
+        <a href="sdg6.html" class="explore-btn"
+           data-en="Explore SDG 6 →"
+           data-bn="এসডিজি ৬ দেখুন →">
+          Explore SDG 6 →
+        </a>
+      </div>
+    </article>
+
+    <article class="sdg-card">
+      <div class="sdg-image">
+        <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1000&q=85"
+             alt="Ocean waves">
+      </div>
+
+      <div class="sdg-content">
+        <div class="sdg-number"
+             data-en="UNITED NATIONS SDG 14"
+             data-bn="জাতিসংঘের এসডিজি ১৪">
+          UNITED NATIONS SDG 14
+        </div>
+
+        <h3 data-en="Life Below Water" data-bn="জলজ জীবন">
+          Life Below Water
+        </h3>
+
+        <p data-en="Discover ocean pollution, marine biodiversity, plastic waste, and the conservation of marine ecosystems."
+           data-bn="সমুদ্রদূষণ, সামুদ্রিক জীববৈচিত্র্য, প্লাস্টিক বর্জ্য এবং সামুদ্রিক বাস্তুতন্ত্র সংরক্ষণ সম্পর্কে জানুন।">
+          Discover ocean pollution, marine biodiversity, plastic waste, and the conservation of marine ecosystems.
+        </p>
+
+        <a href="sdg14.html" class="explore-btn"
+           data-en="Explore SDG 14 →"
+           data-bn="এসডিজি ১৪ দেখুন →">
+          Explore SDG 14 →
+        </a>
+      </div>
+    </article>
+
+  </div>
+</div>
+</section>
+
+</main>
+
+<footer>
+  <p data-en="Water connects us all. Explore, understand, and take action."
+     data-bn="পানি আমাদের সবাইকে সংযুক্ত করে। অনুসন্ধান করুন, বুঝুন এবং উদ্যোগ নিন।">
+    Water connects us all. Explore, understand, and take action.
+  </p>
+  <p style="margin-top:8px">Created by Ariyan Tausif</p>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+/* =========================
+   LANGUAGE SYSTEM
+========================= */
+
+let currentLanguage = "en";
+
+function t(en,bn){
+  return currentLanguage === "en" ? en : bn;
+}
+
+function toggleLanguage(){
+  currentLanguage = currentLanguage === "en" ? "bn" : "en";
+  document.documentElement.lang = currentLanguage;
+
+  document.querySelectorAll("[data-en][data-bn]").forEach(element=>{
+    const value = element.getAttribute("data-" + currentLanguage);
+
+    if(element.tagName === "INPUT"){
+      element.placeholder = value;
+    }else{
+      element.textContent = value;
+    }
+  });
+
+  document.getElementById("languageBtn").textContent =
+    currentLanguage === "en" ? "বাংলা" : "English";
+
+  if(selectedLocation){
+    renderLocationResult();
+  }
+}
+
+
+/* =========================
+   MAP SYSTEM
+========================= */
+
+const map = L.map("map").setView([23.685,90.3563],7);
+
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{
+  attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+
+let marker = null;
+let selectedLocation = null;
+let latestResult = null;
+
+map.on("click",event=>{
+  selectLocation(event.latlng.lat,event.latlng.lng);
+});
+
+async function selectLocation(lat,lng){
+  selectedLocation = {lat,lng};
+  latestResult = null;
+
+  if(marker) map.removeLayer(marker);
+
+  marker = L.marker([lat,lng]).addTo(map);
+
+  marker.bindPopup(
+    t("Selected location","নির্বাচিত অবস্থান")
+  ).openPopup();
+
+  document.getElementById("coordinates").textContent =
+    t("Selected coordinates: ","নির্বাচিত স্থানাঙ্ক: ") +
+    lat.toFixed(5) + ", " + lng.toFixed(5);
+
+  showLoading();
+
+  await loadLocationInformation(lat,lng);
+}
+
+
+/* =========================
+   LOADING / ERROR DISPLAY
+========================= */
+
+function showLoading(){
+  const notice = document.getElementById("notice");
+  notice.style.display = "block";
+
+  document.getElementById("noticeTitle").textContent =
+    t("Finding location information...","অবস্থানের তথ্য খোঁজা হচ্ছে...");
+
+  document.getElementById("noticeText").textContent =
+    t("The page is identifying the selected location and checking available public data.",
+      "নির্বাচিত স্থান শনাক্ত করা হচ্ছে এবং উন্মুক্ত তথ্য খোঁজা হচ্ছে।");
+
+  document.getElementById("noticeReason").textContent = "";
+  document.getElementById("noticePriority").textContent = "";
+  document.getElementById("dataHeading").textContent = "";
+  document.getElementById("dataList").innerHTML = "";
+  document.getElementById("sourceLinks").innerHTML = "";
+}
+
+
+/* =========================
+   REVERSE GEOCODING
+   OpenStreetMap Nominatim
+========================= */
+
+async function reverseGeocode(lat,lng){
+  const url =
+    "https://nominatim.openstreetmap.org/reverse" +
+    "?format=jsonv2" +
+    "&lat=" + encodeURIComponent(lat) +
+    "&lon=" + encodeURIComponent(lng) +
+    "&zoom=10" +
+    "&addressdetails=1";
+
+  const response = await fetch(url,{
+    headers:{"Accept":"application/json"}
+  });
+
+  if(!response.ok){
+    throw new Error("Geocoding service unavailable");
+  }
+
+  return await response.json();
+}
+
+
+/* =========================
+   SDG 6 DATA API
+   UN-Water SDG 6 Data Portal
+
+   Indicators used:
+   6.1.1 Drinking water
+   6.2.1 Sanitation and hygiene
+   6.3.2 Water quality
+========================= */
+
+async function fetchSDG6Indicator(indicator,countryName){
+  const url =
+    "https://sdg6data.org/api/indicator/" +
+    encodeURIComponent(indicator) +
+    "?_format=json&per_page=100&country=" +
+    encodeURIComponent(countryName);
+
+  const response = await fetch(url);
+
+  if(!response.ok){
+    throw new Error("SDG 6 API request failed");
+  }
+
+  const json = await response.json();
+
+  // API response: [pagination metadata, array of records]
+  if(Array.isArray(json) && Array.isArray(json[1])){
+    return json[1];
+  }
+
+  // Some responses may return a plain array of records.
+  if(Array.isArray(json)){
+    return json.filter(item=>item && item.Indicator);
+  }
+
+  return [];
+}
+
+
+function getLatestRecord(records){
+  if(!records || !records.length) return null;
+
+  const valid = records.filter(item=>
+    item.Value !== null &&
+    item.Value !== undefined &&
+    item.Value !== "" &&
+    !isNaN(Number(item.Value))
+  );
+
+  if(!valid.length) return null;
+
+  valid.sort((a,b)=>
+    Number(b.TimePeriod || 0) - Number(a.TimePeriod || 0)
+  );
+
+  return valid[0];
+}
+
+
+/* =========================
+   MAIN LOCATION DATA
+========================= */
+
+async function loadLocationInformation(lat,lng){
+  try{
+    const place = await reverseGeocode(lat,lng);
+
+    if(!selectedLocation ||
+       selectedLocation.lat !== lat ||
+       selectedLocation.lng !== lng){
+      return;
+    }
+
+    const address = place.address || {};
+
+    const countryName =
+      address.country || "Unknown country";
+
+    const countryCode =
+      (address.country_code || "").toUpperCase();
+
+    const city =
+      address.city ||
+      address.town ||
+      address.village ||
+      address.county ||
+      address.state ||
+      "";
+
+    let countryLabel = countryName;
+
+    if(city){
+      countryLabel = city + ", " + countryName;
+    }
+
+    document.getElementById("coordinates").textContent =
+      t("Selected location: ","নির্বাচিত স্থান: ") +
+      countryLabel +
+      " | " + lat.toFixed(5) + ", " + lng.toFixed(5);
+
+    const records = await Promise.allSettled([
+      fetchSDG6Indicator("6.1.1",countryName),
+      fetchSDG6Indicator("6.2.1",countryName),
+      fetchSDG6Indicator("6.3.2",countryName)
+    ]);
+
+    if(!selectedLocation ||
+       selectedLocation.lat !== lat ||
+       selectedLocation.lng !== lng){
+      return;
+    }
+
+    const indicatorNames = [
+      {
+        code:"6.1.1",
+        en:"Drinking water services",
+        bn:"পানীয় জলের সেবা"
+      },
+      {
+        code:"6.2.1",
+        en:"Sanitation and hygiene",
+        bn:"স্যানিটেশন ও স্বাস্থ্যবিধি"
+      },
+      {
+        code:"6.3.2",
+        en:"Water quality",
+        bn:"পানির গুণমান"
+      }
+    ];
+
+    const results = [];
+
+    records.forEach((result,index)=>{
+      if(result.status === "fulfilled"){
+        const record = getLatestRecord(result.value);
+
+        if(record){
+          results.push({
+            name:indicatorNames[index],
+            record:record
+          });
+        }
+      }
+    });
+
+    latestResult = {
+      place:countryLabel,
+      country:countryName,
+      countryCode:countryCode,
+      results:results
+    };
+
+    renderLocationResult();
+
+  }catch(error){
+    console.error(error);
+
+    document.getElementById("noticeTitle").textContent =
+      t("Location information unavailable",
+        "অবস্থানের তথ্য পাওয়া যায়নি");
+
+    document.getElementById("noticeText").textContent =
+      t("The location service could not identify this point. Please try another point or try again later.",
+        "অবস্থান শনাক্ত করার সেবাটি এই স্থানটি শনাক্ত করতে পারেনি। অন্য স্থান নির্বাচন করুন অথবা পরে আবার চেষ্টা করুন।");
+
+    document.getElementById("noticeReason").textContent =
+      t("No SDG priority has been calculated.",
+        "এখানে কোনো এসডিজি অগ্রাধিকার নির্ধারণ করা হয়নি।");
+
+    document.getElementById("noticePriority").textContent =
+      t("NO VERIFIED RESULT","যাচাইকৃত ফলাফল পাওয়া যায়নি");
+
+    document.getElementById("dataHeading").textContent = "";
+    document.getElementById("dataList").innerHTML = "";
+    document.getElementById("sourceLinks").innerHTML = "";
+  }
+}
+
+
+/* =========================
+   SAFE HTML HELPERS
+========================= */
+
+function escapeHTML(value){
+  return String(value ?? "").replace(/[&<>"']/g,char=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
+  })[char]);
+}
+
+
+/* =========================
+   DISPLAY DATA
+========================= */
+
+function renderLocationResult(){
+  if(!latestResult) return;
+
+  const result = latestResult;
+  const notice = document.getElementById("notice");
+
+  notice.style.display = "block";
+
+  document.getElementById("noticeTitle").textContent =
+    t("Environmental information for ","পরিবেশগত তথ্য: ") +
+    result.place;
+
+  document.getElementById("noticeText").textContent =
+    t(
+      "The selected point has been identified. Available UN-Water SDG 6 indicator data is shown below when found.",
+      "নির্বাচিত স্থানটি শনাক্ত করা হয়েছে। পাওয়া গেলে UN-Water-এর SDG 6 সূচকের তথ্য নিচে দেখানো হচ্ছে।"
+    );
+
+  document.getElementById("noticeReason").textContent =
+    t(
+      "These records are generally national-level reports, not live measurements at your exact map point. SDG 14 data has not been verified for this exact location by this page.",
+      "এই তথ্য সাধারণত দেশভিত্তিক প্রতিবেদন, মানচিত্রে আপনার নির্দিষ্ট অবস্থানের সরাসরি লাইভ পরিমাপ নয়। এই পেজটি নির্বাচিত স্থানের জন্য SDG 14-এর তথ্যও যাচাই করতে পারেনি।"
+    );
+
+  document.getElementById("noticePriority").textContent =
+    t(
+      "SDG 6 vs SDG 14: INSUFFICIENT LOCAL EVIDENCE TO RANK",
+      "SDG 6 বনাম SDG 14: অগ্রাধিকার নির্ধারণের মতো স্থানীয় প্রমাণ নেই"
+    );
+
+  document.getElementById("dataHeading").textContent =
+    t("Available SDG 6 data","প্রাপ্ত SDG 6 তথ্য");
+
+  const list = document.getElementById("dataList");
+  list.innerHTML = "";
+
+  if(result.results.length === 0){
+    list.innerHTML =
+      '<div class="data-item"><strong>' +
+      escapeHTML(t("No matching records found","কোনো মিল থাকা তথ্য পাওয়া যায়নি")) +
+      '</strong><span>' +
+      escapeHTML(t(
+        "The API did not return a matching record for this country. This does not mean the water is safe or unsafe.",
+        "API এই দেশের জন্য মিলে যায় এমন তথ্য দেয়নি। এর অর্থ এই নয় যে পানি নিরাপদ বা অনিরাপদ।"
+      )) +
+      '</span></div>';
+  }else{
+    result.results.forEach(item=>{
+      const record = item.record;
+
+      const value = record.Value;
+      const year = record.TimePeriod || "Not stated";
+      const source = record.Source || "Source not specified";
+      const location = record.Location || record.GeoAreaType || "Not specified";
+      const units = record.Units || "";
+
+      const card = document.createElement("div");
+      card.className = "data-item";
+
+      const heading = document.createElement("strong");
+      heading.textContent =
+        item.name[currentLanguage] + " (" + item.name.code + ")";
+
+      const details = document.createElement("span");
+
+      details.textContent =
+        t("Reported value: ","প্রতিবেদিত মান: ") +
+        value + (units ? " " + units : "") +
+        " | " +
+        t("Year: ","বছর: ") + year +
+        " | " +
+        t("Geography: ","ভৌগোলিক স্তর: ") + location +
+        " | " +
+        t("Source: ","উৎস: ") + source;
+
+      card.appendChild(heading);
+      card.appendChild(details);
+      list.appendChild(card);
+    });
+  }
+
+  const links = document.getElementById("sourceLinks");
+  links.innerHTML = "";
+
+  const sdg6Link = document.createElement("a");
+  sdg6Link.href = "https://www.sdg6data.org/";
+  sdg6Link.target = "_blank";
+  sdg6Link.rel = "noopener noreferrer";
+  sdg6Link.textContent =
+    t("UN-Water SDG 6 Data Portal ↗","UN-Water SDG 6 তথ্যভান্ডার ↗");
+
+  const unLink = document.createElement("a");
+  unLink.href = "https://unstats.un.org/sdgs/dataportal";
+  unLink.target = "_blank";
+  unLink.rel = "noopener noreferrer";
+  unLink.textContent =
+    t("UN SDG Global Database ↗","জাতিসংঘ SDG Global Database ↗");
+
+  links.appendChild(sdg6Link);
+  links.appendChild(unLink);
+}
+
+
+/* =========================
+   DEVICE LOCATION
+========================= */
+
+function useMyLocation(){
+  if(!navigator.geolocation){
+    alert(t(
+      "Location services are not supported by this browser.",
+      "এই ব্রাউজারে অবস্থান নির্ণয়ের সুবিধা নেই।"
+    ));
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    position=>{
+      const lat = position.coords.latitude;
+      const lng = position.coords.longitude;
+
+      map.setView([lat,lng],11);
+      selectLocation(lat,lng);
+    },
+
+    ()=>{
+      alert(t(
+        "Location permission was not granted. You can select your location manually on the map.",
+        "অবস্থান ব্যবহারের অনুমতি পাওয়া যায়নি। আপনি মানচিত্রে নিজে ক্লিক করে অবস্থান নির্বাচন করতে পারেন।"
+      ));
+    },
+
+    {
+      enableHighAccuracy:true,
+      timeout:15000,
+      maximumAge:60000
+    }
+  );
+}
+</script>
+
+</body>
+</html>

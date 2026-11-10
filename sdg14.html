@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#041e2a">
+<title>BlueSentinel | SDG 14 Marine Intelligence</title>
+
+<style>
+:root{
+ --bg:#041923;--panel:#092b38;--panel2:#103c4b;
+ --line:rgba(142,221,225,.17);--text:#eafafa;
+ --muted:#a4c4ca;--cyan:#5de1df;--blue:#60b7f5;
+ --green:#8be5b5;--gold:#ffd27d;--red:#ff9999;
+ --radius:21px;--shadow:0 18px 50px #0004;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:100px}
+body{
+ margin:0;background:
+ radial-gradient(circle at 85% 4%,#137e9233,transparent 30%),
+ radial-gradient(circle at 5% 35%,#12628a22,transparent 32%),
+ var(--bg);
+ color:var(--text);
+ font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif;
+ line-height:1.65
+}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+a{color:var(--cyan)}
+.wrap{width:min(1180px,92%);margin:auto}
+.topbar{
+ position:sticky;top:0;z-index:30;
+ background:#041923ef;backdrop-filter:blur(16px);
+ border-bottom:1px solid var(--line)
+}
+.nav{
+ min-height:75px;display:flex;align-items:center;
+ justify-content:space-between;gap:15px;flex-wrap:wrap;padding:10px 0
+}
+.brand{display:flex;align-items:center;gap:11px;font-weight:900}
+.logo{
+ width:43px;height:43px;border-radius:14px;display:grid;place-items:center;
+ background:linear-gradient(135deg,#6de6df,#278dbb);color:#04232d;font-size:25px
+}
+.brand small{display:block;font-size:9px;letter-spacing:1.8px;color:var(--muted)}
+.tabs{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.nav-tab,.lang-btn{
+ border:1px solid var(--line);border-radius:12px;padding:10px 15px;
+ background:transparent;color:var(--muted);font-size:12px;font-weight:850
+}
+.nav-tab:hover,.nav-tab.active,.lang-btn.active{
+ background:linear-gradient(110deg,#64e5d7,#69b9ef);
+ color:#04232d;border-color:transparent
+}
+.btn{
+ border:0;border-radius:12px;padding:12px 17px;font-weight:850;
+ text-decoration:none;display:inline-flex;justify-content:center;align-items:center;gap:7px
+}
+.primary{background:linear-gradient(110deg,#64e5d7,#69b9ef);color:#04232d}
+.secondary{background:transparent;border:1px solid var(--line);color:var(--text)}
+.hero{
+ padding:72px 0 55px;display:grid;grid-template-columns:1.12fr .88fr;
+ gap:35px;align-items:center
+}
+.eyebrow{color:var(--cyan);font-size:11px;font-weight:900;letter-spacing:2px;text-transform:uppercase}
+h1{font-size:clamp(40px,6vw,72px);line-height:1.02;letter-spacing:-2.5px;margin:16px 0}
+h1 span{color:var(--cyan)}
+.lead{font-size:17px;color:#c4dfe1;max-width:690px}
+.actions{display:flex;gap:11px;flex-wrap:wrap;margin-top:25px}
+.hero-image{
+ min-height:355px;border:1px solid var(--line);border-radius:30px;overflow:hidden;
+ position:relative;background:
+ linear-gradient(0deg,#041923bb,transparent 60%),
+ url("https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1100&q=85") center/cover;
+ box-shadow:var(--shadow)
+}
+.hero-label{
+ position:absolute;bottom:20px;left:20px;background:#062b38dd;
+ border:1px solid var(--line);border-radius:15px;padding:13px 17px
+}
+.hero-label strong{display:block;color:var(--cyan);font-size:20px}
+.section{padding:48px 0}
+.head{max-width:800px;margin-bottom:24px}
+h2{font-size:clamp(27px,4vw,41px);line-height:1.15;letter-spacing:-1px;margin:8px 0}
+.head p,.muted{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card,.panel{
+ background:linear-gradient(145deg,#103b49ef,#082633);
+ border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)
+}
+.card h3{margin:8px 0;font-size:19px}
+.card p{font-size:14px;color:var(--muted);margin:0}
+.icon{
+ width:43px;height:43px;border-radius:13px;display:grid;place-items:center;
+ background:#176175;color:#a8fff0;font-size:21px
+}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:17px}
+.tag{
+ display:inline-block;padding:5px 10px;border-radius:40px;border:1px solid #5de1df55;
+ color:var(--cyan);font-size:10px;font-weight:900;letter-spacing:.6px
+}
+.field{display:grid;gap:6px}
+.field label{font-size:12px;color:#c4e4e5;font-weight:800}
+.field input,.field select,.field textarea{
+ width:100%;padding:12px;background:#041e28;color:var(--text);
+ border:1px solid #416b77;border-radius:11px;outline:none
+}
+.field input:focus,.field select:focus,.field textarea:focus{
+ border-color:var(--cyan);box-shadow:0 0 0 3px #5de1df22
+}
+.field textarea{min-height:85px;resize:vertical}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.full{grid-column:1/-1}
+.form-actions{display:flex;flex-wrap:wrap;gap:10px}
+.note{
+ border-left:3px solid var(--gold);padding:13px 15px;background:#45371c44;
+ border-radius:0 12px 12px 0;font-size:13px;color:#f5e5bc
+}
+.notice-red{border-left-color:var(--red);background:#4b222244;color:#ffdada}
+.metricrow{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.metric{background:#062530;border:1px solid var(--line);padding:17px;border-radius:15px;min-width:0}
+.metric strong{display:block;font-size:clamp(18px,3vw,28px);color:var(--cyan);overflow-wrap:anywhere}
+.metric span{font-size:11px;color:var(--muted)}
+.result{display:none;margin-top:16px;padding:18px;background:#062530;border:1px solid var(--line);border-radius:15px}
+.result.show{display:block}
+.bar{height:10px;border-radius:30px;background:#193d49;overflow:hidden;margin:9px 0}
+.bar span{height:100%;display:block;background:linear-gradient(90deg,#5de1df,#ffd27d,#ff8585);transition:width .5s}
+.pill{display:inline-block;padding:5px 10px;border-radius:30px;font-size:11px;font-weight:900}
+.low{background:#174c3d;color:#a5f0c4}
+.medium{background:#58441f;color:#ffe0a0}
+.high{background:#592a32;color:#ffb4b4}
+.steps{display:grid;gap:14px}
+.step{display:flex;gap:13px}
+.num{
+ flex:0 0 31px;height:31px;border-radius:10px;display:grid;place-items:center;
+ background:#176175;color:#c0fff6;font-weight:900
+}
+.step p{margin:3px 0;color:var(--muted);font-size:13px}
+.divider{height:1px;background:var(--line);margin:17px 0}
+.small{font-size:11px;color:var(--muted)}
+.data-list{display:grid;gap:9px}
+.data-item{background:#062530;border:1px solid var(--line);border-radius:12px;padding:12px}
+.data-item strong{display:block;font-size:13px}
+.data-item span{color:var(--muted);font-size:12px;display:block}
+.roadmap{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.roadmap .card{padding:17px}
+.roadmap b{color:var(--cyan);font-size:11px}
+.footer{border-top:1px solid var(--line);padding:28px 0 40px;color:var(--muted);font-size:12px}
+footer strong{color:white}
+#mapframe{width:100%;height:300px;border:0;border-radius:15px;background:#0a303b}
+[hidden]{display:none!important}
+button:disabled{opacity:.55;cursor:not-allowed}
+.language-area{display:flex;gap:6px;align-items:center}
+@media(max-width:850px){
+ .hero{grid-template-columns:1fr;padding-top:45px}
+ .grid{grid-template-columns:1fr 1fr}
+ .split{grid-template-columns:1fr}
+ .roadmap{grid-template-columns:1fr 1fr}
+}
+@media(max-width:560px){
+ .nav{align-items:flex-start}.tabs{width:100%}
+ .nav-tab{flex:1;padding:9px 7px;font-size:11px}
+ .grid,.metricrow,.formgrid{grid-template-columns:1fr}
+ .full{grid-column:auto}.hero-image{min-height:270px}
+ .card,.panel{padding:18px}.hero{padding-top:35px}
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+ <div class="wrap nav">
+  <div class="brand">
+   <div class="logo">🌊</div>
+   <div>BLUESENTINEL<small>GLOBAL MARINE INTELLIGENCE</small></div>
+  </div>
+
+  <div class="tabs">
+   <div class="language-area" aria-label="Language selector">
+    <button class="lang-btn" id="langToggleBtn" type="button">বাংলা</button>
+   </div>
+   <nav class="tabs" aria-label="Main navigation">
+    <button class="nav-tab active" data-view="marineView" data-en="Marine Intelligence" data-bn="সামুদ্রিক তথ্য ও অনুসন্ধান">Marine Intelligence</button>
+    <button class="nav-tab" data-view="conservationView" data-en="Conservation & Action" data-bn="সংরক্ষণ ও কার্যক্রম">Conservation &amp; Action</button>
+   </nav>
+  </div>
+ </div>
+</header>
+
+<main>
+
+<div id="marineView">
+
+<section class="wrap hero">
+ <div>
+  <div class="eyebrow" data-en="UN SDG 14 · LIFE BELOW WATER" data-bn="জাতিসংঘের SDG 14 · জলজ জীবন">UN SDG 14 · LIFE BELOW WATER</div>
+  <h1 data-en="Protect the <span>Blue Planet.</span>" data-bn="রক্ষা করি <span>নীল পৃথিবী।</span>">Protect the <span>Blue Planet.</span></h1>
+  <p class="lead" data-en="BlueSentinel is a proposed global marine intelligence platform designed to explore aquatic pollution, understand river-to-ocean pathways, estimate plastic leakage pressure and support evidence-based conservation decisions." data-bn="BlueSentinel একটি প্রস্তাবিত বৈশ্বিক সামুদ্রিক তথ্যভিত্তিক প্ল্যাটফর্ম। এর লক্ষ্য জলজ দূষণ অনুসন্ধান, নদী থেকে সমুদ্রে দূষণ পৌঁছানোর পথ বোঝা, প্লাস্টিক নিঃসরণের সম্ভাব্য চাপ হিসাব করা এবং তথ্যভিত্তিক সংরক্ষণ সিদ্ধান্তে সহায়তা করা।">BlueSentinel is a proposed global marine intelligence platform designed to explore aquatic pollution, understand river-to-ocean pathways, estimate plastic leakage pressure and support evidence-based conservation decisions.</p>
+  <div class="actions">
+   <a class="btn primary" href="#explorer" data-en="Explore Global Water →" data-bn="বিশ্বের জলপথ অনুসন্ধান →">Explore Global Water →</a>
+   <a class="btn secondary" href="#calculator" data-en="Open Screening Calculator" data-bn="দূষণ যাচাই ক্যালকুলেটর">Open Screening Calculator</a>
+  </div>
+  <p class="small" style="margin-top:18px" data-en="Student innovation prototype · Environmental decision-support concept" data-bn="শিক্ষার্থী উদ্ভাবন প্রোটোটাইপ · পরিবেশগত সিদ্ধান্ত-সহায়ক ধারণা">Student innovation prototype · Environmental decision-support concept</p>
+ </div>
+ <div class="hero-image">
+  <div class="hero-label"><strong>SDG 14</strong><span data-en="Conserve and sustainably use oceans, seas and marine resources" data-bn="সমুদ্র, মহাসাগর ও সামুদ্রিক সম্পদ সংরক্ষণ এবং টেকসই ব্যবহার">Conserve and sustainably use oceans, seas and marine resources</span></div>
+ </div>
+</section>
+
+<section class="section wrap" id="challenge">
+ <div class="head">
+  <div class="eyebrow" data-en="01 / GLOBAL CHALLENGE" data-bn="০১ / বৈশ্বিক চ্যালেঞ্জ">01 / GLOBAL CHALLENGE</div>
+  <h2 data-en="Our oceans are connected to every community." data-bn="আমাদের মহাসাগর প্রতিটি জনপদের সঙ্গে যুক্ত।">Our oceans are connected to every community.</h2>
+  <p data-en="Marine ecosystems face multiple pressures. Pollution can travel through rivers, coastlines and ocean currents, while habitat degradation and unsustainable activities threaten biodiversity." data-bn="সামুদ্রিক বাস্তুতন্ত্র নানা ধরনের চাপের মুখে রয়েছে। দূষণ নদী, উপকূল ও সমুদ্রস্রোতের মাধ্যমে ছড়াতে পারে। অন্যদিকে আবাসস্থলের অবক্ষয় ও অনিরাপদ কর্মকাণ্ড জীববৈচিত্র্যের জন্য হুমকি তৈরি করে।">Marine ecosystems face multiple pressures. Pollution can travel through rivers, coastlines and ocean currents, while habitat degradation and unsustainable activities threaten biodiversity.</p>
+ </div>
+ <div class="grid">
+  <article class="card"><div class="icon">♻</div><h3 data-en="Marine Plastic Pollution" data-bn="সামুদ্রিক প্লাস্টিক দূষণ">Marine Plastic Pollution</h3><p data-en="Mismanaged plastic waste can move from settlements and waterways into estuaries and coastal ecosystems, where it can persist and harm marine life." data-bn="অপর্যাপ্তভাবে ব্যবস্থাপিত প্লাস্টিক বর্জ্য জনবসতি ও জলপথ থেকে মোহনা এবং উপকূলীয় বাস্তুতন্ত্রে পৌঁছাতে পারে। সেখানে এটি দীর্ঘদিন থেকে সামুদ্রিক প্রাণীর ক্ষতি করতে পারে।">Mismanaged plastic waste can move from settlements and waterways into estuaries and coastal ecosystems, where it can persist and harm marine life.</p></article>
+  <article class="card"><div class="icon">🧪</div><h3 data-en="Water Contamination" data-bn="পানিদূষণ">Water Contamination</h3><p data-en="Chemical discharges, wastewater and nutrient pollution can degrade aquatic environments and create risks for ecosystems." data-bn="রাসায়নিক বর্জ্য, অপরিশোধিত বর্জ্যপানি এবং অতিরিক্ত পুষ্টি উপাদান জলজ পরিবেশের অবক্ষয় ঘটাতে পারে।">Chemical discharges, wastewater and nutrient pollution can degrade aquatic environments and create risks for ecosystems.</p></article>
+  <article class="card"><div class="icon">🐠</div><h3 data-en="Biodiversity Loss" data-bn="জীববৈচিত্র্যের ক্ষতি">Biodiversity Loss</h3><p data-en="Habitat degradation, overexploitation and pollution place pressure on coral reefs, fish populations and marine species." data-bn="আবাসস্থলের অবক্ষয়, অতিরিক্ত আহরণ এবং দূষণ প্রবালপ্রাচীর, মাছের সংখ্যা ও সামুদ্রিক প্রজাতির ওপর চাপ সৃষ্টি করে।">Habitat degradation, overexploitation and pollution place pressure on coral reefs, fish populations and marine species.</p></article>
+  <article class="card"><div class="icon">🌡</div><h3 data-en="Ocean Warming" data-bn="সমুদ্রের উষ্ণতা বৃদ্ধি">Ocean Warming</h3><p data-en="Rising ocean temperatures and marine heatwaves can stress sensitive habitats and contribute to coral bleaching." data-bn="সমুদ্রের তাপমাত্রা বৃদ্ধি ও সামুদ্রিক তাপপ্রবাহ সংবেদনশীল আবাসস্থলে চাপ সৃষ্টি করতে পারে এবং প্রবাল বিবর্ণতায় ভূমিকা রাখতে পারে।">Rising ocean temperatures and marine heatwaves can stress sensitive habitats and contribute to coral bleaching.</p></article>
+  <article class="card"><div class="icon">🏝</div><h3 data-en="Coastal Ecosystem Degradation" data-bn="উপকূলীয় বাস্তুতন্ত্রের অবক্ষয়">Coastal Ecosystem Degradation</h3><p data-en="Mangroves, salt marshes and seagrass habitats face pressures from development, pollution and changing environmental conditions." data-bn="ম্যানগ্রোভ, লবণাক্ত জলাভূমি ও সামুদ্রিক ঘাসের আবাসস্থল উন্নয়ন, দূষণ এবং পরিবেশগত পরিবর্তনের কারণে ঝুঁকিতে রয়েছে।">Mangroves, salt marshes and seagrass habitats face pressures from development, pollution and changing environmental conditions.</p></article>
+  <article class="card"><div class="icon">📊</div><h3 data-en="Data Gaps" data-bn="তথ্যের ঘাটতি">Data Gaps</h3><p data-en="Environmental observations are often scattered across different sources, making it difficult to compare locations and coordinate action." data-bn="পরিবেশগত পর্যবেক্ষণের তথ্য বিভিন্ন উৎসে ছড়িয়ে থাকে। ফলে বিভিন্ন স্থান তুলনা করা এবং সমন্বিত উদ্যোগ নেওয়া কঠিন হয়।">Environmental observations are often scattered across different sources, making it difficult to compare locations and coordinate action.</p></article>
+ </div>
+</section>
+
+<section class="section wrap" id="solution">
+ <div class="head">
+  <div class="eyebrow" data-en="02 / OUR INNOVATION" data-bn="০২ / আমাদের উদ্ভাবন">02 / OUR INNOVATION</div>
+  <h2 data-en="From scattered observations to coordinated action." data-bn="বিচ্ছিন্ন পর্যবেক্ষণ থেকে সমন্বিত উদ্যোগে।">From scattered observations to coordinated action.</h2>
+  <p data-en="BlueSentinel combines location selection, transparent screening calculations, environmental context and conservation planning in one accessible interface." data-bn="BlueSentinel একটি সহজ ইন্টারফেসে স্থান নির্বাচন, স্বচ্ছ স্ক্রিনিং হিসাব, পরিবেশগত প্রেক্ষাপট এবং সংরক্ষণ পরিকল্পনা একত্র করে।">BlueSentinel combines location selection, transparent screening calculations, environmental context and conservation planning in one accessible interface.</p>
+ </div>
+ <div class="split">
+  <div class="panel">
+   <h3 data-en="How BlueSentinel Works" data-bn="BlueSentinel যেভাবে কাজ করে">How BlueSentinel Works</h3>
+   <div class="steps">
+    <div class="step"><div class="num">1</div><div><strong data-en="Select a location" data-bn="স্থান নির্বাচন করুন">Select a location</strong><p data-en="Choose a country, river and coastal region to define an area of interest." data-bn="আগ্রহের এলাকা নির্ধারণ করতে দেশ, নদী ও উপকূলীয় অঞ্চল নির্বাচন করুন।">Choose a country, river and coastal region to define an area of interest.</p></div></div>
+    <div class="step"><div class="num">2</div><div><strong data-en="Enter observations" data-bn="পর্যবেক্ষণের তথ্য দিন">Enter observations</strong><p data-en="Record visible litter, waste-management conditions and local environmental concerns." data-bn="দৃশ্যমান আবর্জনা, বর্জ্য ব্যবস্থাপনার অবস্থা এবং স্থানীয় পরিবেশগত সমস্যার তথ্য দিন।">Record visible litter, waste-management conditions and local environmental concerns.</p></div></div>
+    <div class="step"><div class="num">3</div><div><strong data-en="Calculate pollution pressure" data-bn="দূষণের সম্ভাব্য চাপ হিসাব করুন">Calculate pollution pressure</strong><p data-en="Use a transparent screening model to organise reported indicators into a preliminary index." data-bn="প্রদত্ত সূচকগুলোকে প্রাথমিক স্ক্রিনিং সূচকে সাজাতে একটি স্বচ্ছ মডেল ব্যবহার করুন।">Use a transparent screening model to organise reported indicators into a preliminary index.</p></div></div>
+    <div class="step"><div class="num">4</div><div><strong data-en="Compare solutions" data-bn="সমাধান তুলনা করুন">Compare solutions</strong><p data-en="Explore hypothetical interventions and compare their estimated effects." data-bn="সম্ভাব্য উদ্যোগগুলো পরীক্ষা করুন এবং তাদের অনুমানভিত্তিক প্রভাব তুলনা করুন।">Explore hypothetical interventions and compare their estimated effects.</p></div></div>
+   </div>
+  </div>
+  <div class="panel">
+   <span class="tag" data-en="CORE INNOVATION" data-bn="মূল উদ্ভাবন">CORE INNOVATION</span>
+   <h3 data-en="River-to-Ocean Intelligence" data-bn="নদী থেকে সমুদ্র পর্যন্ত তথ্য বিশ্লেষণ">River-to-Ocean Intelligence</h3>
+   <p class="muted" data-en="Rather than treating marine pollution as an isolated coastal issue, BlueSentinel explores how land-based waste and river systems may contribute to pressures on downstream marine environments." data-bn="সামুদ্রিক দূষণকে শুধু উপকূলীয় সমস্যা হিসেবে না দেখে, স্থলভাগের বর্জ্য ও নদীব্যবস্থা কীভাবে downstream সামুদ্রিক পরিবেশের ওপর চাপ সৃষ্টি করতে পারে, তা BlueSentinel অনুসন্ধান করে।">Rather than treating marine pollution as an isolated coastal issue, BlueSentinel explores how land-based waste and river systems may contribute to pressures on downstream marine environments.</p>
+   <div class="divider"></div>
+   <div class="metricrow">
+    <div class="metric"><strong>01</strong><span data-en="Location intelligence" data-bn="স্থানভিত্তিক তথ্য">Location intelligence</span></div>
+    <div class="metric"><strong>02</strong><span data-en="Risk screening" data-bn="ঝুঁকি স্ক্রিনিং">Risk screening</span></div>
+    <div class="metric"><strong>03</strong><span data-en="Action planning" data-bn="কর্মপরিকল্পনা">Action planning</span></div>
+   </div>
+   <p class="small" style="margin-top:15px" data-en="This is a decision-support prototype, not a certified pollution-monitoring or laboratory service." data-bn="এটি সিদ্ধান্ত গ্রহণে সহায়ক একটি প্রোটোটাইপ; এটি অনুমোদিত দূষণ পর্যবেক্ষণ বা পরীক্ষাগার সেবা নয়।">This is a decision-support prototype, not a certified pollution-monitoring or laboratory service.</p>
+  </div>
+ </div>
+</section>
+
+<section class="section wrap" id="explorer">
+ <div class="head">
+  <div class="eyebrow" data-en="03 / GLOBAL WATER EXPLORER" data-bn="০৩ / বৈশ্বিক জলপথ অনুসন্ধান">03 / GLOBAL WATER EXPLORER</div>
+  <h2 data-en="Explore rivers and coastal regions worldwide." data-bn="বিশ্বের নদী ও উপকূলীয় অঞ্চল অনুসন্ধান করুন।">Explore rivers and coastal regions worldwide.</h2>
+  <p data-en="Select a country and a river from the available reference list. If your river is not listed, enter its name manually. River locations are representative geographic references, not official monitoring stations." data-bn="তালিকা থেকে দেশ ও নদী নির্বাচন করুন। নদী তালিকায় না থাকলে নিজে নাম লিখুন। দেখানো নদীর স্থানাঙ্ক আনুমানিক ভৌগোলিক রেফারেন্স, অনুমোদিত পর্যবেক্ষণ কেন্দ্র নয়।">Select a country and a river from the available reference list. If your river is not listed, enter its name manually. River locations are representative geographic references, not official monitoring stations.</p>
+ </div>
+ <div class="panel">
+  <div class="formgrid">
+   <div class="field"><label for="country" data-en="Select Country" data-bn="দেশ নির্বাচন করুন">Select Country</label><select id="country"><option value="" data-en="Choose a country" data-bn="দেশ নির্বাচন করুন">Choose a country</option></select></div>
+   <div class="field"><label for="river" data-en="Select River / Waterway" data-bn="নদী / জলপথ নির্বাচন করুন">Select River / Waterway</label><select id="river" disabled><option value="">Select a country first</option></select></div>
+   <div class="field full"><label for="customRiver" data-en="Or enter another river / waterway" data-bn="অথবা অন্য নদী / জলপথের নাম লিখুন">Or enter another river / waterway</label><input id="customRiver" placeholder="Enter a river or waterway name" data-en-placeholder="Enter a river or waterway name" data-bn-placeholder="নদী বা জলপথের নাম লিখুন"></div>
+   <div class="field"><label for="regionType" data-en="Area Type" data-bn="এলাকার ধরন">Area Type</label><select id="regionType">
+    <option data-en="River Basin" data-bn="নদী অববাহিকা">River Basin</option><option data-en="River Estuary" data-bn="নদীর মোহনা">River Estuary</option><option data-en="Coastal Region" data-bn="উপকূলীয় অঞ্চল">Coastal Region</option><option data-en="Marine Protected Area" data-bn="সামুদ্রিক সংরক্ষিত এলাকা">Marine Protected Area</option><option data-en="Open Ocean Reference" data-bn="উন্মুক্ত সমুদ্রের রেফারেন্স">Open Ocean Reference</option>
+   </select></div>
+   <div class="field"><label for="concern" data-en="Primary Environmental Concern" data-bn="প্রধান পরিবেশগত সমস্যা">Primary Environmental Concern</label><select id="concern">
+    <option data-en="Plastic pollution" data-bn="প্লাস্টিক দূষণ">Plastic pollution</option><option data-en="Wastewater pollution" data-bn="বর্জ্যপানির দূষণ">Wastewater pollution</option><option data-en="Nutrient pollution" data-bn="পুষ্টি উপাদানজনিত দূষণ">Nutrient pollution</option><option data-en="Habitat degradation" data-bn="আবাসস্থলের অবক্ষয়">Habitat degradation</option><option data-en="Marine biodiversity" data-bn="সামুদ্রিক জীববৈচিত্র্য">Marine biodiversity</option><option data-en="Multiple pressures" data-bn="একাধিক পরিবেশগত চাপ">Multiple pressures</option>
+   </select></div>
+   <div class="field full form-actions">
+    <button class="btn primary" id="exploreBtn" type="button" data-en="Explore Selected Region →" data-bn="নির্বাচিত অঞ্চল অনুসন্ধান করুন →">Explore Selected Region →</button>
+    <button class="btn secondary" id="resetExplore" type="button" data-en="Reset" data-bn="রিসেট">Reset</button>
+   </div>
+  </div>
+  <div id="exploreResult" class="result">
+   <h3 id="locationTitle">Selected Region</h3>
+   <p id="locationDescription" class="muted"></p>
+   <div class="divider"></div>
+   <div class="metricrow">
+    <div class="metric"><strong id="locationCountry">—</strong><span data-en="Country" data-bn="দেশ">Country</span></div>
+    <div class="metric"><strong id="locationRiver">—</strong><span data-en="Waterway" data-bn="জলপথ">Waterway</span></div>
+    <div class="metric"><strong id="locationConcern">—</strong><span data-en="Focus" data-bn="মূল বিষয়">Focus</span></div>
+   </div>
+   <div class="divider"></div>
+   <p class="small" data-en="The selection identifies an area of interest. It does not confirm the presence, concentration or severity of pollution." data-bn="এই নির্বাচন শুধু একটি আগ্রহের এলাকা চিহ্নিত করে। এটি দূষণের উপস্থিতি, ঘনত্ব বা মাত্রা নিশ্চিত করে না।">The selection identifies an area of interest. It does not confirm the presence, concentration or severity of pollution.</p>
+  </div>
+ </div>
+</section>
+
+<section class="section wrap" id="data">
+ <div class="head">
+  <div class="eyebrow" data-en="04 / ENVIRONMENTAL DATA CONTEXT" data-bn="০৪ / পরিবেশগত তথ্য">04 / ENVIRONMENTAL DATA CONTEXT</div>
+  <h2 data-en="Bring environmental context into the investigation." data-bn="অনুসন্ধানে পরিবেশগত প্রেক্ষাপট যুক্ত করুন।">Bring environmental context into the investigation.</h2>
+  <p data-en="BlueSentinel can display marine forecast context for supported ocean coordinates. Marine conditions are not pollution measurements." data-bn="সমর্থিত সামুদ্রিক স্থানাঙ্কের জন্য BlueSentinel সামুদ্রিক পূর্বাভাসের তথ্য দেখাতে পারে। সামুদ্রিক অবস্থা দূষণের পরিমাপ নয়।">BlueSentinel can display marine forecast context for supported ocean coordinates. Marine conditions are not pollution measurements.</p>
+ </div>
+ <div class="split">
+  <div class="panel">
+   <h3 data-en="Regional Marine Conditions" data-bn="সামুদ্রিক পরিবেশের অবস্থা">Regional Marine Conditions</h3>
+   <p class="small" data-en="Uses the Open-Meteo Marine API for ocean coordinates entered below. River coordinates must not be used as marine locations." data-bn="নিচে দেওয়া সমুদ্রের স্থানাঙ্কের জন্য Open-Meteo Marine API ব্যবহার করা হয়। নদীর স্থানাঙ্ককে সামুদ্রিক অবস্থান হিসেবে ব্যবহার করা যাবে না।">Uses the Open-Meteo Marine API for ocean coordinates entered below. River coordinates must not be used as marine locations.</p>
+   <div class="formgrid" style="margin:14px 0">
+    <div class="field"><label for="marineLat" data-en="Ocean latitude" data-bn="সমুদ্রের অক্ষাংশ">Ocean latitude</label><input id="marineLat" type="number" step="any" min="-90" max="90" placeholder="e.g. 21.5"></div>
+    <div class="field"><label for="marineLon" data-en="Ocean longitude" data-bn="সমুদ্রের দ্রাঘিমাংশ">Ocean longitude</label><input id="marineLon" type="number" step="any" min="-180" max="180" placeholder="e.g. 91.0"></div>
+   </div>
+   <div class="metricrow">
+    <div class="metric"><strong id="waveValue">—</strong><span data-en="Wave height (m)" data-bn="ঢেউয়ের উচ্চতা (মিটার)">Wave height (m)</span></div>
+    <div class="metric"><strong id="tempValue">—</strong><span data-en="Sea surface temperature (°C)" data-bn="সমুদ্রপৃষ্ঠের তাপমাত্রা (°C)">Sea surface temperature (°C)</span></div>
+    <div class="metric"><strong id="currentValue">—</strong><span data-en="Ocean current (km/h)" data-bn="সমুদ্রস্রোতের গতি (কিমি/ঘণ্টা)">Ocean current (km/h)</span></div>
+   </div>
+   <p class="small" id="marineStatus" data-en="Enter ocean coordinates and request marine context. Coastal forecast accuracy may be limited." data-bn="সমুদ্রের স্থানাঙ্ক দিয়ে সামুদ্রিক তথ্যের অনুরোধ করুন। উপকূলীয় অঞ্চলে পূর্বাভাসের নির্ভুলতা সীমিত হতে পারে।">Enter ocean coordinates and request marine context. Coastal forecast accuracy may be limited.</p>
+   <button class="btn secondary" id="marineBtn" type="button" data-en="Load Marine Context" data-bn="সামুদ্রিক তথ্য আনুন">Load Marine Context</button>
+  </div>
+  <div class="panel">
+   <h3 data-en="Geographic Reference" data-bn="ভৌগোলিক অবস্থান">Geographic Reference</h3>
+   <p class="muted" data-en="The map displays selected river reference coordinates. It is not a pollution map or a live sampling network." data-bn="মানচিত্রে নির্বাচিত নদীর আনুমানিক অবস্থান দেখানো হয়। এটি দূষণের মানচিত্র বা সরাসরি নমুনা সংগ্রহের নেটওয়ার্ক নয়।">The map displays selected river reference coordinates. It is not a pollution map or a live sampling network.</p>
+   <iframe id="mapframe" title="Selected geographic reference" loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=88.2%2C20.5%2C92.5%2C24.5&layer=mapnik"></iframe>
+   <p class="small">Map data: OpenStreetMap contributors.</p>
+  </div>
+ </div>
+</section>
+
+<section class="section wrap" id="calculator">
+ <div class="head">
+  <div class="eyebrow" data-en="05 / POLLUTION PRESSURE SCREENING" data-bn="০৫ / দূষণের সম্ভাব্য চাপ যাচাই">05 / POLLUTION PRESSURE SCREENING</div>
+  <h2 data-en="Estimate plastic pollution pressure." data-bn="প্লাস্টিক দূষণের সম্ভাব্য চাপ হিসাব করুন।">Estimate plastic pollution pressure.</h2>
+  <p data-en="Enter observations about a river or coastal area. The model produces a preliminary screening index. It is not a measurement of pollution." data-bn="নদী বা উপকূলীয় এলাকার পর্যবেক্ষণ লিখুন। মডেলটি একটি প্রাথমিক স্ক্রিনিং সূচক তৈরি করবে। এটি দূষণের সরাসরি পরিমাপ নয়।">Enter observations about a river or coastal area. The model produces a preliminary screening index. It is not a measurement of pollution.</p>
+ </div>
+ <div class="split">
+  <div class="panel">
+   <h3 data-en="Environmental Input" data-bn="পরিবেশগত তথ্য প্রদান">Environmental Input</h3>
+   <form id="calcForm">
+    <div class="formgrid">
+     <div class="field full"><label for="calcCountry" data-en="Country" data-bn="দেশ">Country</label><select id="calcCountry" required><option value="">Choose a country</option></select></div>
+     <div class="field full"><label for="calcRiver" data-en="River / Coastal Area" data-bn="নদী / উপকূলীয় এলাকা">River / Coastal Area</label><input id="calcRiver" placeholder="e.g. Ganges Delta" required maxlength="100"></div>
+     <div class="field"><label for="litter" data-en="Visible plastic litter observations" data-bn="দৃশ্যমান প্লাস্টিক বর্জ্যের পরিমাণ">Visible plastic litter observations</label><select id="litter"><option value="1" data-en="Rare" data-bn="খুব কম">Rare</option><option value="2" data-en="Occasional" data-bn="মাঝেমধ্যে">Occasional</option><option value="3" selected data-en="Frequent" data-bn="প্রায়ই">Frequent</option><option value="4" data-en="Very frequent" data-bn="খুব বেশি">Very frequent</option><option value="5" data-en="Extensive" data-bn="ব্যাপক">Extensive</option></select></div>
+     <div class="field"><label for="waste" data-en="Local waste collection coverage (estimated)" data-bn="স্থানীয় বর্জ্য সংগ্রহের আনুমানিক অবস্থা">Local waste collection coverage (estimated)</label><select id="waste"><option value="1" data-en="Very high" data-bn="খুব ভালো">Very high</option><option value="2" data-en="High" data-bn="ভালো">High</option><option value="3" selected data-en="Moderate" data-bn="মাঝারি">Moderate</option><option value="4" data-en="Low" data-bn="কম">Low</option><option value="5" data-en="Very low" data-bn="খুব কম">Very low</option></select></div>
+     <div class="field"><label for="rain" data-en="Heavy rainfall / runoff influence" data-bn="ভারী বৃষ্টি / পানির প্রবাহের প্রভাব">Heavy rainfall / runoff influence</label><select id="rain"><option value="1" data-en="Very low" data-bn="খুব কম">Very low</option><option value="2" data-en="Low" data-bn="কম">Low</option><option value="3" selected data-en="Moderate" data-bn="মাঝারি">Moderate</option><option value="4" data-en="High" data-bn="বেশি">High</option><option value="5" data-en="Very high" data-bn="খুব বেশি">Very high</option></select></div>
+     <div class="field"><label for="density" data-en="Nearby settlement pressure" data-bn="কাছাকাছি জনবসতির চাপ">Nearby settlement pressure</label><select id="density"><option value="1" data-en="Very low" data-bn="খুব কম">Very low</option><option value="2" data-en="Low" data-bn="কম">Low</option><option value="3" selected data-en="Moderate" data-bn="মাঝারি">Moderate</option><option value="4" data-en="High" data-bn="বেশি">High</option><option value="5" data-en="Very high" data-bn="খুব বেশি">Very high</option></select></div>
+     <div class="field"><label for="riverFlow" data-en="River flow / transport potential" data-bn="নদীর প্রবাহ / বর্জ্য পরিবহনের সম্ভাবনা">River flow / transport potential</label><select id="riverFlow"><option value="1" data-en="Very low" data-bn="খুব কম">Very low</option><option value="2" data-en="Low" data-bn="কম">Low</option><option value="3" selected data-en="Moderate" data-bn="মাঝারি">Moderate</option><option value="4" data-en="High" data-bn="বেশি">High</option><option value="5" data-en="Very high" data-bn="খুব বেশি">Very high</option></select></div>
+     <div class="field"><label for="observation" data-en="Observation confidence" data-bn="পর্যবেক্ষণের তথ্যের নির্ভরযোগ্যতা">Observation confidence</label><select id="observation"><option value="1" data-en="Low / anecdotal" data-bn="কম / ব্যক্তিগত অভিজ্ঞতা">Low / anecdotal</option><option value="2" data-en="Some repeated observations" data-bn="কিছু পুনরাবৃত্ত পর্যবেক্ষণ">Some repeated observations</option><option value="3" selected data-en="Several observations" data-bn="একাধিক পর্যবেক্ষণ">Several observations</option><option value="4" data-en="Documented observations" data-bn="নথিভুক্ত পর্যবেক্ষণ">Documented observations</option><option value="5" data-en="Professionally verified data" data-bn="বিশেষজ্ঞ দ্বারা যাচাইকৃত তথ্য">Professionally verified data</option></select></div>
+     <div class="field full"><label for="notes" data-en="Additional observations (optional)" data-bn="অতিরিক্ত পর্যবেক্ষণ (ঐচ্ছিক)">Additional observations (optional)</label><textarea id="notes" maxlength="500" placeholder="Describe visible conditions, dates and general area." data-en-placeholder="Describe visible conditions, dates and general area." data-bn-placeholder="দৃশ্যমান অবস্থা, তারিখ ও এলাকার সাধারণ বিবরণ লিখুন।"></textarea></div>
+     <div class="field full"><button class="btn primary" type="submit" data-en="Calculate Pollution Pressure →" data-bn="দূষণের সম্ভাব্য চাপ হিসাব করুন →">Calculate Pollution Pressure →</button></div>
+    </div>
+   </form>
+  </div>
+  <div class="panel">
+   <span class="tag" data-en="TRANSPARENT RULE-BASED MODEL" data-bn="স্বচ্ছ নিয়মভিত্তিক মডেল">TRANSPARENT RULE-BASED MODEL</span>
+   <h3 data-en="Pollution Pressure Assessment" data-bn="দূষণের সম্ভাব্য চাপ মূল্যায়ন">Pollution Pressure Assessment</h3>
+   <div id="calcResult" class="result" style="display:block">
+    <p class="muted" data-en="Complete the input form to generate an assessment." data-bn="মূল্যায়ন পেতে তথ্যের ফর্মটি পূরণ করুন।">Complete the input form to generate an assessment.</p>
+   </div>
+   <div class="note" style="margin-top:15px" data-en="This is an experimental, rule-based screening calculator. It is not a trained machine-learning model, measured plastic concentration, official pollution index or scientific diagnosis." data-bn="এটি একটি পরীক্ষামূলক নিয়মভিত্তিক স্ক্রিনিং ক্যালকুলেটর। এটি প্রশিক্ষিত মেশিন-লার্নিং মডেল, পরিমাপ করা প্লাস্টিকের ঘনত্ব, সরকারি দূষণ সূচক বা বৈজ্ঞানিক রোগনির্ণয় নয়।">This is an experimental, rule-based screening calculator. It is not a trained machine-learning model, measured plastic concentration, official pollution index or scientific diagnosis.</div>
+  </div>
+ </div>
+</section>
+
+<section class="section wrap" id="leakage">
+ <div class="head">
+  <div class="eyebrow" data-en="06 / PLASTIC LEAKAGE SCENARIO" data-bn="০৬ / প্লাস্টিক নিঃসরণ পরিস্থিতি">06 / PLASTIC LEAKAGE SCENARIO</div>
+  <h2 data-en="Explore a hypothetical river-to-ocean plastic scenario." data-bn="নদী থেকে সমুদ্রে প্লাস্টিক যাওয়ার একটি কাল্পনিক পরিস্থিতি দেখুন।">Explore a hypothetical river-to-ocean plastic scenario.</h2>
+  <p data-en="Estimate a scenario using a user-entered assumed waste load and leakage fraction. This is a planning calculator, not a measurement of actual river emissions." data-bn="ব্যবহারকারীর দেওয়া অনুমানভিত্তিক বর্জ্যের পরিমাণ ও নিঃসরণের হার দিয়ে একটি পরিস্থিতি হিসাব করুন। এটি পরিকল্পনার ক্যালকুলেটর, নদীর প্রকৃত বর্জ্য নিঃসরণের পরিমাপ নয়।">Estimate a scenario using a user-entered assumed waste load and leakage fraction. This is a planning calculator, not a measurement of actual river emissions.</p>
+ </div>
+ <div class="split">
+  <div class="panel">
+   <div class="formgrid">
+    <div class="field"><label for="wasteLoad" data-en="Assumed mismanaged plastic waste (kg/day)" data-bn="অনুমানভিত্তিক অপর্যাপ্তভাবে ব্যবস্থাপিত প্লাস্টিক বর্জ্য (কেজি/দিন)">Assumed mismanaged plastic waste (kg/day)</label><input id="wasteLoad" type="number" min="0" max="100000000" value="1000" step="1"></div>
+    <div class="field"><label for="leakRate" data-en="Assumed fraction reaching water (%)" data-bn="পানিতে পৌঁছানোর অনুমানভিত্তিক হার (%)">Assumed fraction reaching water (%)</label><input id="leakRate" type="number" min="0" max="100" value="10" step="0.5"></div>
+    <div class="field full"><button class="btn primary" id="leakBtn" type="button" data-en="Calculate Scenario" data-bn="পরিস্থিতি হিসাব করুন">Calculate Scenario</button></div>
+   </div>
+   <div id="leakResult" class="result">
+    <h3 data-en="Illustrative Scenario" data-bn="উদাহরণভিত্তিক পরিস্থিতি">Illustrative Scenario</h3>
+    <div class="metricrow">
+     <div class="metric"><strong id="dailyLeak">—</strong><span data-en="kg/day" data-bn="কেজি/দিন">kg/day</span></div>
+     <div class="metric"><strong id="monthlyLeak">—</strong><span data-en="kg/30 days" data-bn="কেজি/৩০ দিন">kg/30 days</span></div>
+     <div class="metric"><strong id="annualLeak">—</strong><span data-en="kg/year" data-bn="কেজি/বছর">kg/year</span></div>
+    </div>
+   </div>
+  </div>
+  <div class="panel">
+   <h3 data-en="What does this estimate mean?" data-bn="এই হিসাবের অর্থ কী?">What does this estimate mean?</h3>
+   <p class="muted" data-en="The result represents a hypothetical amount entering waterways under the assumptions entered. It does not prove that all material reaches the ocean. Retention, collection, transport, fragmentation and river conditions can change actual outcomes." data-bn="ফলাফলটি ব্যবহারকারীর অনুমানের ভিত্তিতে জলপথে প্রবেশ করতে পারে এমন একটি কাল্পনিক পরিমাণ দেখায়। এর অর্থ এই নয় যে সব বর্জ্য সমুদ্রে পৌঁছাবে। আটকে থাকা, সংগ্রহ, পরিবহন, ভাঙন এবং নদীর অবস্থা প্রকৃত ফলাফল পরিবর্তন করতে পারে।">The result represents a hypothetical amount entering waterways under the assumptions entered. It does not prove that all material reaches the ocean. Retention, collection, transport, fragmentation and river conditions can change actual outcomes.</p>
+   <div class="divider"></div>
+   <h3 data-en="Important variables" data-bn="গুরুত্বপূর্ণ বিষয়">Important variables</h3>
+   <div class="steps">
+    <div class="step"><div class="num">1</div><div><strong data-en="Waste generation" data-bn="বর্জ্য উৎপাদন">Waste generation</strong><p data-en="How much plastic waste is generated or mismanaged in the area?" data-bn="এলাকায় কত পরিমাণ প্লাস্টিক বর্জ্য তৈরি হয় বা অপর্যাপ্তভাবে ব্যবস্থাপিত হয়?">How much plastic waste is generated or mismanaged in the area?</p></div></div>
+    <div class="step"><div class="num">2</div><div><strong data-en="Leakage fraction" data-bn="নিঃসরণের হার">Leakage fraction</strong><p data-en="What assumed share escapes waste collection and enters waterways?" data-bn="বর্জ্য সংগ্রহের বাইরে থেকে কত অংশ জলপথে প্রবেশ করে বলে অনুমান করা হচ্ছে?">What assumed share escapes waste collection and enters waterways?</p></div></div>
+    <div class="step"><div class="num">3</div><div><strong data-en="Transport and retention" data-bn="পরিবহন ও আটকে থাকা">Transport and retention</strong><p data-en="How much remains trapped, is collected or travels downstream?" data-bn="কতটা আটকে থাকে, সংগ্রহ করা হয় অথবা ভাটির দিকে প্রবাহিত হয়?">How much remains trapped, is collected or travels downstream?</p></div></div>
+   </div>
+  </div>
+ </div>
+</section>
+</div>
+
+<div id="conservationView" hidden>
+
+<section class="wrap hero">
+ <div>
+  <div class="eyebrow" data-en="UN SDG 14 · CONSERVATION & ACTION" data-bn="জাতিসংঘের SDG 14 · সংরক্ষণ ও কার্যক্রম">UN SDG 14 · CONSERVATION &amp; ACTION</div>
+  <h1 data-en="Turn insight into <span>ocean action.</span>" data-bn="তথ্যকে রূপ দিন <span>সমুদ্র রক্ষার উদ্যোগে।</span>">Turn insight into <span>ocean action.</span></h1>
+  <p class="lead" data-en="Explore possible interventions, understand marine biodiversity and discover a practical pathway for turning the BlueSentinel prototype into a validated environmental pilot." data-bn="সম্ভাব্য উদ্যোগগুলো দেখুন, সামুদ্রিক জীববৈচিত্র্য সম্পর্কে জানুন এবং BlueSentinel প্রোটোটাইপকে যাচাইকৃত পরিবেশগত পাইলটে রূপ দেওয়ার বাস্তবসম্মত পথ খুঁজুন।">Explore possible interventions, understand marine biodiversity and discover a practical pathway for turning the BlueSentinel prototype into a validated environmental pilot.</p>
+  <div class="actions">
+   <a class="btn primary" href="#simulator" data-en="Explore Solutions →" data-bn="সমাধান দেখুন →">Explore Solutions →</a>
+   <a class="btn secondary" href="#impact" data-en="View Action Roadmap" data-bn="কর্মপরিকল্পনা দেখুন">View Action Roadmap</a>
+  </div>
+ </div>
+ <div class="hero-image"><div class="hero-label"><strong data-en="CONSERVATION" data-bn="সংরক্ষণ">CONSERVATION</strong><span data-en="Healthy habitats. Informed communities. Responsible action." data-bn="সুস্থ আবাসস্থল। সচেতন জনসমাজ। দায়িত্বশীল উদ্যোগ।">Healthy habitats. Informed communities. Responsible action.</span></div></div>
+</section>
+
+<section class="section wrap" id="simulator">
+ <div class="head">
+  <div class="eyebrow" data-en="07 / SOLUTION SIMULATOR" data-bn="০৭ / সমাধান সিমুলেটর">07 / SOLUTION SIMULATOR</div>
+  <h2 data-en="Compare possible interventions." data-bn="সম্ভাব্য উদ্যোগগুলোর তুলনা করুন।">Compare possible interventions.</h2>
+  <p data-en="Explore how different hypothetical reductions in plastic leakage could change the scenario. These are user-defined assumptions, not guaranteed environmental outcomes." data-bn="প্লাস্টিক নিঃসরণ কমানোর বিভিন্ন কাল্পনিক হার পরিস্থিতিকে কীভাবে পরিবর্তন করতে পারে তা দেখুন। এগুলো ব্যবহারকারীর অনুমান, নিশ্চিত পরিবেশগত ফলাফল নয়।">Explore how different hypothetical reductions in plastic leakage could change the scenario. These are user-defined assumptions, not guaranteed environmental outcomes.</p>
+ </div>
+ <div class="panel">
+  <div class="formgrid">
+   <div class="field">
+    <label for="reduction" data-en="Assumed leakage reduction (%)" data-bn="নিঃসরণ কমানোর অনুমানভিত্তিক হার (%)">Assumed leakage reduction (%)</label>
+    <input id="reduction" type="range" min="0" max="90" value="40">
+    <strong id="reductionLabel" style="color:var(--cyan)">40%</strong>
+   </div>
+   <div class="field">
+    <label for="intervention" data-en="Intervention strategy" data-bn="উদ্যোগের কৌশল">Intervention strategy</label>
+    <select id="intervention">
+     <option value="collection" data-en="Improved waste collection" data-bn="উন্নত বর্জ্য সংগ্রহ">Improved waste collection</option>
+     <option value="prevention" data-en="Single-use plastic prevention" data-bn="একবার ব্যবহারযোগ্য প্লাস্টিক কমানো">Single-use plastic prevention</option>
+     <option value="recovery" data-en="River litter interception" data-bn="নদী থেকে আবর্জনা সংগ্রহ">River litter interception</option>
+     <option value="combined" data-en="Combined community strategy" data-bn="সমন্বিত সামাজিক উদ্যোগ">Combined community strategy</option>
+    </select>
+   </div>
+  </div>
+  <div class="divider"></div>
+  <div class="metricrow">
+   <div class="metric"><strong id="beforeValue">—</strong><span data-en="Baseline scenario (kg/day)" data-bn="প্রাথমিক পরিস্থিতি (কেজি/দিন)">Baseline scenario (kg/day)</span></div>
+   <div class="metric"><strong id="afterValue">—</strong><span data-en="After hypothetical action" data-bn="কাল্পনিক উদ্যোগের পর">After hypothetical action</span></div>
+   <div class="metric"><strong id="savedValue">—</strong><span data-en="Illustrative reduction (kg/day)" data-bn="উদাহরণভিত্তিক হ্রাস (কেজি/দিন)">Illustrative reduction (kg/day)</span></div>
+  </div>
+  <p class="small" id="simExplanation" style="margin-top:15px" data-en="Enter a scenario above to compare outcomes." data-bn="ফলাফল তুলনা করতে উপরে পরিস্থিতির তথ্য দিন।">Enter a scenario above to compare outcomes.</p>
+ </div>
+</section>
+
+<section class="section wrap" id="biodiversity">
+ <div class="head">
+  <div class="eyebrow" data-en="08 / MARINE BIODIVERSITY" data-bn="০৮ / সামুদ্রিক জীববৈচিত্র্য">08 / MARINE BIODIVERSITY</div>
+  <h2 data-en="Healthy oceans need healthy habitats." data-bn="সুস্থ মহাসাগরের জন্য সুস্থ আবাসস্থল প্রয়োজন।">Healthy oceans need healthy habitats.</h2>
+  <p data-en="Biodiversity conservation is a central part of SDG 14. BlueSentinel provides a learning and planning framework for understanding ecosystem pressures." data-bn="জীববৈচিত্র্য সংরক্ষণ SDG 14-এর একটি গুরুত্বপূর্ণ অংশ। বাস্তুতন্ত্রের ওপর চাপ বোঝার জন্য BlueSentinel একটি শেখা ও পরিকল্পনার কাঠামো দেয়।">Biodiversity conservation is a central part of SDG 14. BlueSentinel provides a learning and planning framework for understanding ecosystem pressures.</p>
+ </div>
+ <div class="grid">
+  <article class="card"><div class="icon">🪸</div><h3 data-en="Coral Reefs" data-bn="প্রবালপ্রাচীর">Coral Reefs</h3><p data-en="Protect reef habitats from pollution, physical damage and warming-related stress." data-bn="দূষণ, শারীরিক ক্ষতি এবং উষ্ণতাজনিত চাপ থেকে প্রবালপ্রাচীরের আবাসস্থল রক্ষা করুন।">Protect reef habitats from pollution, physical damage and warming-related stress.</p></article>
+  <article class="card"><div class="icon">🌿</div><h3 data-en="Mangroves" data-bn="ম্যানগ্রোভ বন">Mangroves</h3><p data-en="Support coastal protection, nursery habitats and carbon-rich ecosystems." data-bn="উপকূল সুরক্ষা, প্রাণীর প্রজনন ও বেড়ে ওঠার আবাসস্থল এবং কার্বনসমৃদ্ধ বাস্তুতন্ত্রকে সহায়তা করে।">Support coastal protection, nursery habitats and carbon-rich ecosystems.</p></article>
+  <article class="card"><div class="icon">🐢</div><h3 data-en="Marine Wildlife" data-bn="সামুদ্রিক বন্যপ্রাণী">Marine Wildlife</h3><p data-en="Reduce pollution and protect habitats used by turtles, seabirds and marine mammals." data-bn="দূষণ কমান এবং সামুদ্রিক কচ্ছপ, পাখি ও স্তন্যপায়ী প্রাণীর আবাসস্থল রক্ষা করুন।">Reduce pollution and protect habitats used by turtles, seabirds and marine mammals.</p></article>
+  <article class="card"><div class="icon">🐟</div><h3 data-en="Sustainable Fisheries" data-bn="টেকসই মৎস্যসম্পদ">Sustainable Fisheries</h3><p data-en="Support responsible fisheries and the long-term health of marine food webs." data-bn="দায়িত্বশীল মৎস্য আহরণ এবং সামুদ্রিক খাদ্যজালের দীর্ঘমেয়াদি সুস্থতাকে সহায়তা করুন।">Support responsible fisheries and the long-term health of marine food webs.</p></article>
+  <article class="card"><div class="icon">🌱</div><h3 data-en="Seagrass Ecosystems" data-bn="সামুদ্রিক ঘাসের বাস্তুতন্ত্র">Seagrass Ecosystems</h3><p data-en="Recognise the ecological role of seagrass meadows and protect them from degradation." data-bn="সামুদ্রিক ঘাসের পরিবেশগত ভূমিকা বুঝুন এবং অবক্ষয় থেকে এগুলো রক্ষা করুন।">Recognise the ecological role of seagrass meadows and protect them from degradation.</p></article>
+  <article class="card"><div class="icon">🔬</div><h3 data-en="Scientific Monitoring" data-bn="বৈজ্ঞানিক পর্যবেক্ষণ">Scientific Monitoring</h3><p data-en="Encourage verified biodiversity observations and professional ecosystem assessment." data-bn="যাচাইকৃত জীববৈচিত্র্য পর্যবেক্ষণ এবং পেশাদার বাস্তুতন্ত্র মূল্যায়নে উৎসাহ দিন।">Encourage verified biodiversity observations and professional ecosystem assessment.</p></article>
+ </div>
+</section>
+
+<section class="section wrap" id="impact">
+ <div class="head">
+  <div class="eyebrow" data-en="09 / IMPLEMENTATION & IMPACT" data-bn="০৯ / বাস্তবায়ন ও প্রভাব">09 / IMPLEMENTATION &amp; IMPACT</div>
+  <h2 data-en="A practical pathway from prototype to pilot." data-bn="প্রোটোটাইপ থেকে পাইলট প্রকল্পে যাওয়ার বাস্তব পথ।">A practical pathway from prototype to pilot.</h2>
+  <p data-en="The platform's proposed impact should be evaluated through real-world partnerships, verified data and measurable outcomes." data-bn="বাস্তব অংশীদারত্ব, যাচাইকৃত তথ্য এবং পরিমাপযোগ্য ফলাফলের মাধ্যমে প্ল্যাটফর্মটির প্রস্তাবিত প্রভাব মূল্যায়ন করা উচিত।">The platform's proposed impact should be evaluated through real-world partnerships, verified data and measurable outcomes.</p>
+ </div>
+ <div class="roadmap">
+  <div class="card"><b data-en="PHASE 01" data-bn="ধাপ ০১">PHASE 01</b><h3 data-en="Research" data-bn="গবেষণা">Research</h3><p data-en="Study local pollution pathways, existing datasets and community needs." data-bn="স্থানীয় দূষণের পথ, বিদ্যমান তথ্য এবং জনসমাজের প্রয়োজন নিয়ে গবেষণা করুন।">Study local pollution pathways, existing datasets and community needs.</p></div>
+  <div class="card"><b data-en="PHASE 02" data-bn="ধাপ ০২">PHASE 02</b><h3 data-en="Validate" data-bn="যাচাই">Validate</h3><p data-en="Work with environmental scientists, local organisations and relevant authorities." data-bn="পরিবেশবিজ্ঞানী, স্থানীয় সংস্থা ও সংশ্লিষ্ট কর্তৃপক্ষের সঙ্গে কাজ করুন।">Work with environmental scientists, local organisations and relevant authorities.</p></div>
+  <div class="card"><b data-en="PHASE 03" data-bn="ধাপ ০৩">PHASE 03</b><h3 data-en="Pilot" data-bn="পাইলট">Pilot</h3><p data-en="Test reporting and data workflows in a selected river or coastal community." data-bn="নির্বাচিত নদী বা উপকূলীয় জনপদে তথ্য সংগ্রহ ও প্রতিবেদন প্রক্রিয়া পরীক্ষা করুন।">Test reporting and data workflows in a selected river or coastal community.</p></div>
+  <div class="card"><b data-en="PHASE 04" data-bn="ধাপ ০৪">PHASE 04</b><h3 data-en="Measure" data-bn="পরিমাপ">Measure</h3><p data-en="Evaluate verified reports, response time, waste reduction and ecosystem outcomes." data-bn="যাচাইকৃত প্রতিবেদন, সাড়া দেওয়ার সময়, বর্জ্য হ্রাস এবং বাস্তুতন্ত্রের ফলাফল মূল্যায়ন করুন।">Evaluate verified reports, response time, waste reduction and ecosystem outcomes.</p></div>
+ </div>
+ <div class="panel" style="margin-top:17px">
+  <h3 data-en="Proposed Pilot Indicators" data-bn="প্রস্তাবিত পাইলট সূচক">Proposed Pilot Indicators</h3>
+  <div class="metricrow">
+   <div class="metric"><strong>1–2</strong><span data-en="Initial pilot locations" data-bn="প্রাথমিক পাইলট এলাকা">Initial pilot locations</span></div>
+   <div class="metric"><strong>30</strong><span data-en="Structured observations target" data-bn="পরিকল্পিত পর্যবেক্ষণের লক্ষ্য">Structured observations target</span></div>
+   <div class="metric"><strong>3</strong><span data-en="Potential local partners target" data-bn="সম্ভাব্য স্থানীয় অংশীদারের লক্ষ্য">Potential local partners target</span></div>
+  </div>
+  <p class="small" style="margin-top:12px" data-en="These are proposed planning targets, not achievements or verified impact statistics." data-bn="এগুলো প্রস্তাবিত পরিকল্পনার লক্ষ্য; অর্জন বা যাচাইকৃত প্রভাবের পরিসংখ্যান নয়।">These are proposed planning targets, not achievements or verified impact statistics.</p>
+ </div>
+</section>
+
+<section class="section wrap" id="xylem">
+ <div class="head">
+  <div class="eyebrow" data-en="10 / INNOVATION CHALLENGE ALIGNMENT" data-bn="১০ / উদ্ভাবন প্রতিযোগিতার সঙ্গে সামঞ্জস্য">10 / INNOVATION CHALLENGE ALIGNMENT</div>
+  <h2 data-en="Connecting SDG 14 with water-quality innovation." data-bn="SDG 14-এর সঙ্গে পানির গুণগত মানের উদ্ভাবনকে যুক্ত করা।">Connecting SDG 14 with water-quality innovation.</h2>
+ </div>
+ <div class="split">
+  <div class="panel">
+   <span class="tag" data-en="Xylem Challenge · Water Quality" data-bn="Xylem Challenge · পানির গুণগত মান">Xylem Challenge · Water Quality</span>
+   <h3 data-en="Potential Alignment" data-bn="সম্ভাব্য সামঞ্জস্য">Potential Alignment</h3>
+   <ul class="muted">
+    <li data-en="Prevent land-based waste from entering waterways." data-bn="স্থলভাগের বর্জ্য জলপথে প্রবেশ রোধ করা।">Prevent land-based waste from entering waterways.</li>
+    <li data-en="Organise observations of suspected pollution." data-bn="সম্ভাব্য দূষণের পর্যবেক্ষণগুলো সাজানো।">Organise observations of suspected pollution.</li>
+    <li data-en="Support monitoring through verified environmental datasets." data-bn="যাচাইকৃত পরিবেশগত তথ্যের মাধ্যমে পর্যবেক্ষণে সহায়তা করা।">Support monitoring through verified environmental datasets.</li>
+    <li data-en="Explore ways to reduce pollutant leakage." data-bn="দূষণ ছড়িয়ে পড়া কমানোর উপায় অনুসন্ধান করা।">Explore ways to reduce pollutant leakage.</li>
+    <li data-en="Help communities organise evidence and follow-up actions." data-bn="জনসমাজকে প্রমাণ ও পরবর্তী উদ্যোগ সাজাতে সহায়তা করা।">Help communities organise evidence and follow-up actions.</li>
+   </ul>
+  </div>
+  <div class="panel">
+   <h3 data-en="What still needs validation?" data-bn="কোন বিষয়গুলো এখনো যাচাই করা প্রয়োজন?">What still needs validation?</h3>
+   <ul class="muted">
+    <li data-en="Reliable local river and marine pollution datasets." data-bn="নির্ভরযোগ্য স্থানীয় নদী ও সামুদ্রিক দূষণ-সংক্রান্ত তথ্য।">Reliable local river and marine pollution datasets.</li>
+    <li data-en="Verified monitoring locations and sampling protocols." data-bn="যাচাইকৃত পর্যবেক্ষণ স্থান ও নমুনা সংগ্রহের পদ্ধতি।">Verified monitoring locations and sampling protocols.</li>
+    <li data-en="Environmental expert review of the calculator." data-bn="ক্যালকুলেটরটি পরিবেশ বিশেষজ্ঞের মাধ্যমে পর্যালোচনা।">Environmental expert review of the calculator.</li>
+    <li data-en="Partnerships for real-world interventions." data-bn="বাস্তব উদ্যোগের জন্য অংশীদারত্ব।">Partnerships for real-world interventions.</li>
+    <li data-en="Evidence that the proposed approach improves outcomes." data-bn="প্রস্তাবিত পদ্ধতি ফলাফল উন্নত করে—এমন প্রমাণ।">Evidence that the proposed approach improves outcomes.</li>
+   </ul>
+  </div>
+ </div>
+ <div class="note" style="margin-top:16px" data-en="BlueSentinel is a proposed SDG 14 innovation that may support the Water Quality theme. It is not an official Xylem project, an endorsed product or a substitute for professional testing." data-bn="BlueSentinel একটি প্রস্তাবিত SDG 14 উদ্ভাবন, যা Water Quality বিষয়ের সঙ্গে সামঞ্জস্যপূর্ণ হতে পারে। এটি Xylem-এর কোনো সরকারি প্রকল্প, অনুমোদিত পণ্য বা পেশাদার পরীক্ষার বিকল্প নয়।">BlueSentinel is a proposed SDG 14 innovation that may support the Water Quality theme. It is not an official Xylem project, an endorsed product or a substitute for professional testing.</div>
+</section>
+
+<section class="section wrap" id="sources">
+ <div class="head">
+  <div class="eyebrow" data-en="11 / DATA TRANSPARENCY" data-bn="১১ / তথ্যের স্বচ্ছতা">11 / DATA TRANSPARENCY</div>
+  <h2 data-en="Scientific and institutional references." data-bn="বৈজ্ঞানিক ও প্রাতিষ্ঠানিক তথ্যসূত্র।">Scientific and institutional references.</h2>
+  <p data-en="The following sources can support future research, data integration and validation. The current prototype does not automatically import pollution measurements from these sources." data-bn="নিচের উৎসগুলো ভবিষ্যৎ গবেষণা, তথ্য সংযোজন ও যাচাইয়ে সহায়তা করতে পারে। বর্তমান প্রোটোটাইপ এসব উৎস থেকে স্বয়ংক্রিয়ভাবে দূষণের পরিমাপ সংগ্রহ করে না।">The following sources can support future research, data integration and validation. The current prototype does not automatically import pollution measurements from these sources.</p>
+ </div>
+ <div class="panel">
+  <div class="data-list">
+   <div class="data-item"><strong>United Nations — Sustainable Development Goal 14</strong><span data-en="Official targets, indicators and global progress." data-bn="সরকারি লক্ষ্য, সূচক এবং বৈশ্বিক অগ্রগতি।">Official targets, indicators and global progress.</span><a href="https://sdgs.un.org/goals/goal14" target="_blank" rel="noopener" data-en="Explore UN SDG 14 ↗" data-bn="জাতিসংঘের SDG 14 দেখুন ↗">Explore UN SDG 14 ↗</a></div>
+   <div class="data-item"><strong>UNEP — Marine and Coastal Environment</strong><span data-en="Marine pollution, plastic pollution and ecosystem information." data-bn="সামুদ্রিক দূষণ, প্লাস্টিক দূষণ ও বাস্তুতন্ত্রের তথ্য।">Marine pollution, plastic pollution and ecosystem information.</span><a href="https://www.unep.org/topics/ocean-seas-and-coasts" target="_blank" rel="noopener" data-en="Explore UNEP ↗" data-bn="UNEP দেখুন ↗">Explore UNEP ↗</a></div>
+   <div class="data-item"><strong>NOAA Marine Debris Program</strong><span data-en="Marine debris research, monitoring and prevention resources." data-bn="সামুদ্রিক আবর্জনা গবেষণা, পর্যবেক্ষণ ও প্রতিরোধের তথ্য।">Marine debris research, monitoring and prevention resources.</span><a href="https://marinedebris.noaa.gov/" target="_blank" rel="noopener" data-en="Explore NOAA ↗" data-bn="NOAA দেখুন ↗">Explore NOAA ↗</a></div>
+   <div class="data-item"><strong>Open-Meteo Marine API</strong><span data-en="Marine weather and physical ocean context, not pollution measurements." data-bn="সামুদ্রিক আবহাওয়া ও সমুদ্রের ভৌত অবস্থা; দূষণের পরিমাপ নয়।">Marine weather and physical ocean context, not pollution measurements.</span><a href="https://open-meteo.com/en/docs/marine-weather-api" target="_blank" rel="noopener" data-en="Explore API ↗" data-bn="API দেখুন ↗">Explore API ↗</a></div>
+   <div class="data-item"><strong>NASA Earth Observatory</strong><span data-en="Satellite imagery and Earth-system observations." data-bn="স্যাটেলাইট চিত্র এবং পৃথিবী-ব্যবস্থার পর্যবেক্ষণ।">Satellite imagery and Earth-system observations.</span><a href="https://earthobservatory.nasa.gov/" target="_blank" rel="noopener" data-en="Explore NASA ↗" data-bn="NASA দেখুন ↗">Explore NASA ↗</a></div>
+  </div>
+ </div>
+</section>
+
+<section class="section wrap">
+ <div class="head">
+  <div class="eyebrow" data-en="12 / PROJECT SUMMARY" data-bn="১২ / প্রকল্পের সারসংক্ষেপ">12 / PROJECT SUMMARY</div>
+  <h2 data-en="BlueSentinel — a connected view of marine challenges." data-bn="BlueSentinel — সামুদ্রিক সমস্যাগুলোকে সংযুক্তভাবে দেখার উদ্যোগ।">BlueSentinel — a connected view of marine challenges.</h2>
+ </div>
+ <div class="panel">
+  <p class="muted" data-en="BlueSentinel is a proposed global marine intelligence and decision-support platform focused on the connection between river systems, coastal environments and ocean health. Its prototype combines geographic selection, transparent pollution-pressure screening, hypothetical plastic leakage scenarios, marine environmental context and conservation planning. By bringing these elements together, the project aims to help users understand pollution pathways, organise environmental information and explore practical interventions. Future development will require verified datasets, scientific validation, community partnerships and real-world pilot studies." data-bn="BlueSentinel একটি প্রস্তাবিত বৈশ্বিক সামুদ্রিক তথ্য ও সিদ্ধান্ত-সহায়ক প্ল্যাটফর্ম, যার মূল লক্ষ্য নদীব্যবস্থা, উপকূলীয় পরিবেশ এবং সমুদ্রের সুস্থতার মধ্যকার সম্পর্ক বোঝা। এর প্রোটোটাইপে রয়েছে ভৌগোলিক স্থান নির্বাচন, স্বচ্ছ দূষণ-চাপ স্ক্রিনিং, কাল্পনিক প্লাস্টিক নিঃসরণ পরিস্থিতি, সামুদ্রিক পরিবেশের তথ্য এবং সংরক্ষণ পরিকল্পনা। এসব উপাদান একত্র করে প্রকল্পটি দূষণের পথ বুঝতে, পরিবেশগত তথ্য সাজাতে এবং বাস্তবসম্মত উদ্যোগ অনুসন্ধানে সহায়তা করতে চায়। ভবিষ্যৎ উন্নয়নের জন্য যাচাইকৃত তথ্য, বৈজ্ঞানিক মূল্যায়ন, সামাজিক অংশীদারত্ব এবং বাস্তব পাইলট গবেষণা প্রয়োজন।">BlueSentinel is a proposed global marine intelligence and decision-support platform focused on the connection between river systems, coastal environments and ocean health. Its prototype combines geographic selection, transparent pollution-pressure screening, hypothetical plastic leakage scenarios, marine environmental context and conservation planning. By bringing these elements together, the project aims to help users understand pollution pathways, organise environmental information and explore practical interventions. Future development will require verified datasets, scientific validation, community partnerships and real-world pilot studies.</p>
+  <div class="divider"></div>
+  <strong data-en="Primary Goal:" data-bn="প্রধান লক্ষ্য:">Primary Goal:</strong> SDG 14 — Life Below Water<br>
+  <strong data-en="Potential Competition Track:" data-bn="সম্ভাব্য প্রতিযোগিতার বিভাগ:">Potential Competition Track:</strong> Water Quality<br>
+  <strong data-en="Project Type:" data-bn="প্রকল্পের ধরন:">Project Type:</strong> Marine intelligence and decision-support prototype
+ </div>
+</section>
+</div>
+</main>
+
+<footer class="footer">
+ <div class="wrap">
+  <strong>BlueSentinel</strong> · <span data-en="SDG 14 Marine Intelligence" data-bn="SDG 14 সামুদ্রিক তথ্যব্যবস্থা">SDG 14 Marine Intelligence</span><br>
+  <span data-en="Created by Ariyan Tausif · Bangladesh" data-bn="নির্মাতা: Ariyan Tausif · বাংলাদেশ">Created by Ariyan Tausif · Bangladesh</span><br>
+  <span class="small" data-en="Educational innovation prototype. No official endorsement by Xylem, the United Nations, NOAA or NASA is implied." data-bn="শিক্ষামূলক উদ্ভাবন প্রোটোটাইপ। Xylem, জাতিসংঘ, NOAA বা NASA-এর কোনো আনুষ্ঠানিক অনুমোদন বোঝানো হচ্ছে না।">Educational innovation prototype. No official endorsement by Xylem, the United Nations, NOAA or NASA is implied.</span>
+ </div>
+</footer>
+
+<script>
+"use strict";
+
+/* =========================
+   LANGUAGE SYSTEM
+========================= */
+let currentLanguage = "en";
+
+function setLanguage(language){
+ currentLanguage = language;
+ document.documentElement.lang = language;
+
+ document.querySelectorAll("[data-en][data-bn]").forEach(element=>{
+  const value = element.dataset[language];
+  if(value !== undefined){
+   if(element.tagName === "INPUT" || element.tagName === "TEXTAREA"){
+    element.placeholder = value;
+   }else if(element.tagName === "OPTION"){
+    element.textContent = value;
+   }else{
+    element.innerHTML = value;
+   }
+  }
+ });
+
+ document.querySelectorAll("[data-en-placeholder]").forEach(element=>{
+  element.placeholder = language === "bn"
+   ? element.dataset.bnPlaceholder
+   : element.dataset.enPlaceholder;
+ });
+
+ const langToggleBtn = document.getElementById("langToggleBtn");
+ if(language === "en"){
+  langToggleBtn.textContent = "বাংলা";
+  langToggleBtn.classList.remove("active");
+ } else {
+  langToggleBtn.textContent = "English";
+  langToggleBtn.classList.add("active");
+ }
+
+ updateCountryOptions();
+ updateRiverOptions();
+ updateDynamicLanguage();
+}
+
+document.getElementById("langToggleBtn").addEventListener("click",()=>{
+ if(currentLanguage === "en"){
+  setLanguage("bn");
+ } else {
+  setLanguage("en");
+ }
+});
+
+function tr(en,bn){
+ return currentLanguage==="bn" ? bn : en;
+}
+
+/* =========================
+   MAIN VIEW NAVIGATION
+========================= */
+const viewButtons=document.querySelectorAll(".nav-tab");
+const views={
+ marineView:document.getElementById("marineView"),
+ conservationView:document.getElementById("conservationView")
+};
+
+viewButtons.forEach(button=>{
+ button.addEventListener("click",()=>{
+  const target=button.dataset.view;
+  Object.entries(views).forEach(([id,element])=>{
+   element.hidden=id!==target;
+  });
+  viewButtons.forEach(item=>item.classList.toggle("active",item===button));
+  window.scrollTo({top:0,behavior:"smooth"});
+ });
+});
+
+/* =========================
+   COUNTRY DIRECTORY
+   Country list generated from ISO country codes.
+========================= */
+const countryCodes = `
+AF AL DZ AD AO AG AR AM AU AT AZ BS BH BD BB BY BE BZ BJ BT BO BA BW BR BN BG BF BI CV KH CM CA CF TD CL CN CO KM CG CR HR CY CZ DK DJ DM DO CD EC EG SV GQ ER EE SZ ET FI FR FR GA GM GE DE GH GR GD GT GN GW GY HT HN HU IS IN ID IR IQ IE IL IT JM JP JO KZ KE KI KP KR KW KG LA LV LB LS LR LY LI LT LU MG MW MY MV ML MT MH MR MU MX FM MD MC MN ME MA MZ MM NA NR NP NL NZ NI NE NG MK NO OM PK PW PA PG PY PE PH PL PT QA RO RU RW KN LC VC WS SM ST SA SN RS SC SL SG SK SI SB SO ZA SS ES LK SD SR SE CH SY TW TJ TZ TH TL TG TO TT TN TR TM TV UG UA AE GB US UY UZ VU VA VE VN YE ZM ZW
+`.trim().split(/\s+/);
+
+const displayNames = new Intl.DisplayNames(
+ [currentLanguage==="bn"?"bn":"en"],
+ {type:"region"}
+);
+
+const countries = countryCodes
+ .map(code=>({code,name:new Intl.DisplayNames(["en"],{type:"region"}).of(code)}))
+ .filter(item=>item.name)
+ .sort((a,b)=>a.name.localeCompare(b.name));
+
+const rivers={
+ "Bangladesh":[
+  {name:"Padma",lat:23.5,lon:90.1},
+  {name:"Jamuna",lat:24.2,lon:89.7},
+  {name:"Meghna",lat:23.6,lon:90.8},
+  {name:"Karnaphuli",lat:22.3,lon:91.8},
+  {name:"Buriganga",lat:23.7,lon:90.4},
+  {name:"Teesta",lat:25.9,lon:89.5}
+ ],
+ "India":[
+  {name:"Ganges",lat:25.3,lon:83},
+  {name:"Brahmaputra",lat:26.2,lon:92},
+  {name:"Yamuna",lat:28.6,lon:77.2},
+  {name:"Godavari",lat:17,lon:81.8},
+  {name:"Krishna",lat:16.2,lon:81.1},
+  {name:"Narmada",lat:22.5,lon:73.8}
+ ],
+ "United States":[
+  {name:"Mississippi",lat:29.1,lon:-89.3},
+  {name:"Missouri",lat:38.8,lon:-90.1},
+  {name:"Colorado",lat:31.8,lon:-114.8},
+  {name:"Hudson",lat:40.7,lon:-74}
+ ],
+ "China":[
+  {name:"Yangtze",lat:31.2,lon:121.5},
+  {name:"Yellow River",lat:37.5,lon:118.5},
+  {name:"Pearl River",lat:22.5,lon:113.8}
+ ],
+ "Brazil":[
+  {name:"Amazon",lat:-0.1,lon:-49.5},
+  {name:"Parana",lat:-27.6,lon:-48.6}
+ ],
+ "Pakistan":[
+  {name:"Indus",lat:24,lon:67.4},
+  {name:"Chenab",lat:28,lon:68},
+  {name:"Ravi",lat:31,lon:74}
+ ],
+ "Egypt":[{name:"Nile",lat:31.4,lon:30.2}],
+ "United Kingdom":[
+  {name:"Thames",lat:51.5,lon:0},
+  {name:"Severn",lat:51.7,lon:-2.7}
+ ],
+ "France":[
+  {name:"Seine",lat:49.4,lon:.2},
+  {name:"Loire",lat:47.2,lon:-2.2},
+  {name:"Rhone",lat:43.3,lon:4.8}
+ ],
+ "Germany":[
+  {name:"Rhine",lat:51.9,lon:4},
+  {name:"Elbe",lat:53.9,lon:8.7},
+  {name:"Danube",lat:48,lon:11.6}
+ ],
+ "Vietnam":[
+  {name:"Mekong",lat:10,lon:105.8},
+  {name:"Red River",lat:20.2,lon:106}
+ ],
+ "Thailand":[
+  {name:"Chao Phraya",lat:13.5,lon:100.5},
+  {name:"Mekong",lat:17,lon:104}
+ ],
+ "Myanmar":[
+  {name:"Irrawaddy",lat:16,lon:95.5},
+  {name:"Salween",lat:16,lon:97.5}
+ ],
+ "Indonesia":[
+  {name:"Citarum",lat:-6,lon:107.4},
+  {name:"Kapuas",lat:-.1,lon:109}
+ ],
+ "Japan":[
+  {name:"Shinano",lat:37.9,lon:138.9},
+  {name:"Tone",lat:35.7,lon:140.8}
+ ],
+ "Australia":[
+  {name:"Murray",lat:-35.6,lon:138.9},
+  {name:"Darling",lat:-34.1,lon:142}
+ ],
+ "Canada":[
+  {name:"St. Lawrence",lat:47,lon:-70},
+  {name:"Fraser",lat:49.1,lon:-123.2}
+ ],
+ "Russia":[
+  {name:"Volga",lat:46.7,lon:48},
+  {name:"Ob",lat:66.5,lon:66.5},
+  {name:"Yenisei",lat:71,lon:82}
+ ],
+ "Argentina":[{name:"Parana",lat:-34,lon:-58.4}],
+ "Colombia":[{name:"Magdalena",lat:10.3,lon:-75.5}],
+ "South Africa":[
+  {name:"Orange",lat:-28.6,lon:16.5},
+  {name:"Limpopo",lat:-24,lon:33}
+ ],
+ "Nigeria":[
+  {name:"Niger",lat:4.5,lon:6},
+  {name:"Benue",lat:4.5,lon:7}
+ ],
+ "Italy":[
+  {name:"Po",lat:44.9,lon:12.5},
+  {name:"Tiber",lat:41.7,lon:12.2}
+ ],
+ "Spain":[
+  {name:"Ebro",lat:40.7,lon:.9},
+  {name:"Tagus",lat:38.7,lon:-9.2}
+ ],
+ "Philippines":[
+  {name:"Pasig",lat:14.5,lon:120.9},
+  {name:"Cagayan",lat:17.5,lon:121.8}
+ ],
+ "Sri Lanka":[
+  {name:"Mahaweli",lat:7,lon:81},
+  {name:"Kelani",lat:6.9,lon:79.9}
+ ]
+};
+
+const countrySelect=document.getElementById("country");
+const calcCountry=document.getElementById("calcCountry");
+const riverSelect=document.getElementById("river");
+
+function countryNameEnglish(name){
+ return name;
+}
+
+function countryNameLocalized(name){
+ if(currentLanguage==="en")return name;
+ const match=countries.find(item=>item.name===name);
+ return match ? new Intl.DisplayNames(["bn"],{type:"region"}).of(match.code) : name;
+}
+
+function updateCountryOptions(){
+ const previous=countrySelect.value;
+ const previousCalc=calcCountry.value;
+
+ countrySelect.innerHTML="";
+ calcCountry.innerHTML="";
+
+ const first=new Option(tr("Choose a country","দেশ নির্বাচন করুন"),"");
+ countrySelect.add(first);
+ calcCountry.add(new Option(tr("Choose a country","দেশ নির্বাচন করুন"),""));
+
+ countries.forEach(item=>{
+  const localized=countryNameLocalized(item.name);
+  countrySelect.add(new Option(localized,item.name));
+  calcCountry.add(new Option(localized,item.name));
+ });
+
+ countrySelect.value=previous;
+ calcCountry.value=previousCalc;
+}
+
+function updateRiverOptions(){
+ const country=countrySelect.value;
+ riverSelect.innerHTML="";
+
+ if(!country){
+  riverSelect.add(new Option(
+   tr("Select a country first","আগে একটি দেশ নির্বাচন করুন"),""
+  ));
+  riverSelect.disabled=true;
+  return;
+ }
+
+ const list=rivers[country]||[];
+ if(!list.length){
+  riverSelect.add(new Option(
+   tr("No listed river — enter manually","তালিকায় নদী নেই — নিজে নাম লিখুন"),""
+  ));
+  riverSelect.disabled=true;
+  return;
+ }
+
+ riverSelect.add(new Option(
+  tr("Choose a river","নদী নির্বাচন করুন"),""
+ ));
+ list.forEach(item=>riverSelect.add(new Option(item.name,item.name)));
+ riverSelect.disabled=false;
+}
+
+countrySelect.addEventListener("change",updateRiverOptions);
+
+function getSelectedCoordinates(){
+ const country=countrySelect.value;
+ const selected=riverSelect.value;
+ const list=rivers[country]||[];
+ return list.find(item=>item.name===selected)||null;
+}
+
+function updateMap(lat,lon){
+ const delta=.35;
+ const bbox=[
+  lon-delta,lat-delta,lon+delta,lat+delta
+ ].join(",");
+ const url=new URL("https://www.openstreetmap.org/export/embed.html");
+ url.searchParams.set("bbox",bbox);
+ url.searchParams.set("layer","mapnik");
+ url.searchParams.set("marker",lat+","+lon);
+ document.getElementById("mapframe").src=url.toString();
+}
+
+function resetMap(){
+ document.getElementById("mapframe").src=
+ "https://www.openstreetmap.org/export/embed.html?bbox=88.2%2C20.5%2C92.5%2C24.5&layer=mapnik";
+}
+
+/* =========================
+   EXPLORE SELECTED REGION
+========================= */
+document.getElementById("exploreBtn").addEventListener("click",()=>{
+ const country=countrySelect.value;
+ const river=riverSelect.value;
+ const custom=document.getElementById("customRiver").value.trim();
+ const region=document.getElementById("regionType");
+ const concern=document.getElementById("concern");
+ const waterway=custom||river;
+
+ if(!country||!waterway){
+  alert(tr(
+   "Please select a country and choose or enter a waterway.",
+   "অনুগ্রহ করে একটি দেশ নির্বাচন করুন এবং নদী বা জলপথের নাম নির্বাচন করুন বা লিখুন।"
+  ));
+  return;
+ }
+
+ const regionName=region.options[region.selectedIndex].text;
+ const concernName=concern.options[concern.selectedIndex].text;
+
+ document.getElementById("exploreResult").classList.add("show");
+ document.getElementById("locationTitle").textContent=waterway+" — "+regionName;
+ document.getElementById("locationDescription").textContent=
+  tr("Area of interest: ","আগ্রহের এলাকা: ")+waterway+", "+countryNameLocalized(country)+
+  ". "+tr("Main concern: ","প্রধান সমস্যা: ")+concernName+
+  ". "+tr(
+   "This is a geographic research selection, not a verified pollution assessment.",
+   "এটি ভৌগোলিক গবেষণার জন্য নির্বাচন, যাচাইকৃত দূষণ মূল্যায়ন নয়।"
+  );
+
+ document.getElementById("locationCountry").textContent=countryNameLocalized(country);
+ document.getElementById("locationRiver").textContent=waterway;
+ document.getElementById("locationConcern").textContent=concernName;
+
+ const item=custom ? null : getSelectedCoordinates();
+
+ if(item){
+  updateMap(item.lat,item.lon);
+  document.getElementById("marineStatus").textContent=tr(
+   "River reference coordinates loaded on the map. These are approximate inland coordinates and must not be used for marine forecasts.",
+   "নদীর আনুমানিক স্থানাঙ্ক মানচিত্রে দেখানো হয়েছে। এগুলো স্থলভাগের স্থানাঙ্ক; সামুদ্রিক পূর্বাভাসের জন্য ব্যবহার করা যাবে না।"
+  );
+ }else{
+  resetMap();
+  document.getElementById("marineStatus").textContent=tr(
+   "No reference coordinates are available for this custom waterway. The map has not been moved.",
+   "এই নিজস্ব জলপথের জন্য কোনো রেফারেন্স স্থানাঙ্ক নেই। মানচিত্রের অবস্থান পরিবর্তন করা হয়নি।"
+  );
+ }
+});
+
+document.getElementById("resetExplore").addEventListener("click",()=>{
+ countrySelect.value="";
+ updateRiverOptions();
+ document.getElementById("customRiver").value="";
+ document.getElementById("exploreResult").classList.remove("show");
+ document.getElementById("marineStatus").textContent=tr(
+  "Enter ocean coordinates and request marine context. Coastal forecast accuracy may be limited.",
+  "সমুদ্রের স্থানাঙ্ক দিয়ে সামুদ্রিক তথ্যের অনুরোধ করুন। উপকূলীয় অঞ্চলে পূর্বাভাসের নির্ভুলতা সীমিত হতে পারে।"
+ );
+ resetMap();
+});
+
+/* =========================
+   MARINE API
+   User must enter ocean coordinates.
+========================= */
+document.getElementById("marineBtn").addEventListener("click",async()=>{
+ const lat=Number(document.getElementById("marineLat").value);
+ const lon=Number(document.getElementById("marineLon").value);
+ const latRaw=document.getElementById("marineLat").value.trim();
+ const lonRaw=document.getElementById("marineLon").value.trim();
+ const status=document.getElementById("marineStatus");
+ const button=document.getElementById("marineBtn");
+
+ if(!latRaw||!lonRaw||!Number.isFinite(lat)||!Number.isFinite(lon)||lat < -90||lat > 90||lon < -180||lon > 180){
+  status.textContent=tr(
+   "Enter valid ocean coordinates: latitude from -90 to 90 and longitude from -180 to 180.",
+   "সঠিক সমুদ্রের স্থানাঙ্ক দিন: অক্ষাংশ -৯০ থেকে ৯০ এবং দ্রাঘিমাংশ -১৮০ থেকে ১৮০-এর মধ্যে হতে হবে।"
+  );
+  return;
+ }
+
+ status.textContent=tr("Requesting marine forecast context...","সামুদ্রিক পূর্বাভাসের তথ্য আনা হচ্ছে...");
+ button.disabled=true;
+
+ document.getElementById("waveValue").textContent="—";
+ document.getElementById("tempValue").textContent="—";
+ document.getElementById("currentValue").textContent="—";
+
+ try{
+  const url=new URL("https://marine-api.open-meteo.com/v1/marine");
+  url.searchParams.set("latitude",lat);
+  url.searchParams.set("longitude",lon);
+  url.searchParams.set("current","wave_height,sea_surface_temperature,ocean_current_velocity");
+  url.searchParams.set("timezone","auto");
+  url.searchParams.set("cell_selection","sea");
+
+  const response=await fetch(url.toString());
+  const data=await response.json();
+
+  if(!response.ok||data.error){
+   throw new Error(data.reason||"Marine API unavailable");
+  }
+
+  const current=data.current||{};
+  const formatValue=value=>
+   value===null||value===undefined ? "N/A" : Number(value).toFixed(2);
+
+  document.getElementById("waveValue").textContent=formatValue(current.wave_height);
+  document.getElementById("tempValue").textContent=formatValue(current.sea_surface_temperature);
+  document.getElementById("currentValue").textContent=formatValue(current.ocean_current_velocity);
+
+  status.textContent=tr(
+   "Marine forecast context retrieved. This is model-based environmental information, not a pollution measurement. Accuracy may be limited near coasts.",
+   "সামুদ্রিক পূর্বাভাসের তথ্য পাওয়া গেছে। এটি মডেলভিত্তিক পরিবেশগত তথ্য, দূষণের পরিমাপ নয়। উপকূলের কাছে নির্ভুলতা সীমিত হতে পারে।"
+  );
+ }catch(error){
+  status.textContent=tr(
+   "Marine data is unavailable for this coordinate or request. This does not indicate polluted or clean water.",
+   "এই স্থানাঙ্ক বা অনুরোধের জন্য সামুদ্রিক তথ্য পাওয়া যায়নি। এর অর্থ পানি দূষিত বা পরিষ্কার—কোনোটিই নয়।"
+  );
+ }finally{
+  button.disabled=false;
+ }
+});
+
+/* =========================
+   POLLUTION PRESSURE SCREENING
+========================= */
+function safe(value){
+ return String(value).replace(/[&<>"']/g,char=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",
+  '"':"&quot;","'":"&#39;"
+ }[char]));
+}
+
+function interpret(score){
+ if(score>=70)return tr(
+  "The selected observations indicate several potentially concerning pressure factors. A qualified local assessment and verified monitoring data should be prioritised.",
+  "নির্বাচিত পর্যবেক্ষণে একাধিক সম্ভাব্য উদ্বেগজনক বিষয় দেখা যাচ্ছে। স্থানীয় বিশেষজ্ঞের মূল্যায়ন এবং যাচাইকৃত পর্যবেক্ষণ তথ্যকে অগ্রাধিকার দেওয়া উচিত।"
+ );
+ if(score>=45)return tr(
+  "The entered observations suggest a combination of possible environmental pressure factors. More consistent observations and independent verification are recommended.",
+  "প্রদত্ত পর্যবেক্ষণে একাধিক সম্ভাব্য পরিবেশগত চাপের ইঙ্গিত রয়েছে। আরও নিয়মিত পর্যবেক্ষণ ও স্বাধীন যাচাই সুপারিশ করা হচ্ছে।"
+ );
+ return tr(
+  "The entered observations indicate fewer reported pressure factors. This does not establish that the area is clean or safe.",
+  "প্রদত্ত পর্যবেক্ষণে তুলনামূলকভাবে কম চাপের বিষয় দেখা গেছে। এর অর্থ এই নয় যে এলাকাটি পরিষ্কার বা নিরাপদ বলে নিশ্চিত।"
+ );
+}
+
+function recommend(score){
+ if(score>=70)return tr(
+  "Document the observation safely, consult responsible environmental authorities, and request appropriate professional assessment.",
+  "নিরাপদভাবে পর্যবেক্ষণের তথ্য নথিভুক্ত করুন, সংশ্লিষ্ট পরিবেশ কর্তৃপক্ষের সঙ্গে যোগাযোগ করুন এবং পেশাদার মূল্যায়নের অনুরোধ করুন।"
+ );
+ if(score>=45)return tr(
+  "Improve waste-management documentation, gather repeated observations and identify appropriate local partners.",
+  "বর্জ্য ব্যবস্থাপনার তথ্য নথিভুক্ত করুন, পুনরাবৃত্ত পর্যবেক্ষণ সংগ্রহ করুন এবং উপযুক্ত স্থানীয় অংশীদার খুঁজুন।"
+ );
+ return tr(
+  "Maintain routine monitoring, reduce waste leakage and continue community education.",
+  "নিয়মিত পর্যবেক্ষণ বজায় রাখুন, বর্জ্য নিঃসরণ কমান এবং জনসচেতনতা কার্যক্রম চালিয়ে যান।"
+ );
+}
+
+document.getElementById("calcForm").addEventListener("submit",event=>{
+ event.preventDefault();
+
+ const country=document.getElementById("calcCountry").value;
+ const river=document.getElementById("calcRiver").value.trim();
+
+ if(!country||!river){
+  alert(tr(
+   "Please select a country and enter a river or coastal area.",
+   "অনুগ্রহ করে দেশ নির্বাচন করুন এবং নদী বা উপকূলীয় এলাকার নাম লিখুন।"
+  ));
+  return;
+ }
+
+ const values={
+  litter:Number(document.getElementById("litter").value),
+  waste:Number(document.getElementById("waste").value),
+  rain:Number(document.getElementById("rain").value),
+  density:Number(document.getElementById("density").value),
+  flow:Number(document.getElementById("riverFlow").value)
+ };
+
+ const weightedScore=
+  values.litter*.35+
+  values.waste*.25+
+  values.rain*.15+
+  values.density*.15+
+  values.flow*.10;
+
+ const score=Math.max(20,Math.min(100,Math.round(weightedScore*20)));
+ const confidence=Number(document.getElementById("observation").value);
+ let level=tr("Low","কম");
+ let className="low";
+
+ if(score>=70){
+  level=tr("High","উচ্চ");
+  className="high";
+ }else if(score>=45){
+  level=tr("Moderate","মাঝারি");
+  className="medium";
+ }
+
+ const notes=document.getElementById("notes").value.trim();
+ const result=document.getElementById("calcResult");
+
+ result.innerHTML=`
+  <h3>${tr("Preliminary Pollution Pressure Index","প্রাথমিক দূষণ-চাপ সূচক")}</h3>
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
+   <strong style="font-size:40px;color:var(--cyan)">${score}/100</strong>
+   <span class="pill ${className}">${level} ${tr("screening category","স্ক্রিনিং শ্রেণি")}</span>
+  </div>
+  <div class="bar"><span style="width:${score}%"></span></div>
+  <p class="muted">${tr("Location: ","অবস্থান: ")}${safe(countryNameLocalized(country))} · ${safe(river)}</p>
+  <p class="muted">${tr("Observation confidence selected: ","নির্বাচিত পর্যবেক্ষণ নির্ভরযোগ্যতা: ")}${confidence}/5. ${tr("This describes the input source, not the model's scientific accuracy.","এটি তথ্যের উৎস সম্পর্কে ধারণা দেয়, মডেলের বৈজ্ঞানিক নির্ভুলতা নয়।")}</p>
+  <div class="divider"></div>
+  <h4>${tr("Interpretation","ব্যাখ্যা")}</h4>
+  <p class="muted">${interpret(score)}</p>
+  <h4>${tr("Suggested next steps","পরবর্তী করণীয়")}</h4>
+  <p class="muted">${recommend(score)}</p>
+  <div class="note">${tr(
+   "Screening index only. It is not a measured pollution concentration, probability, regulatory classification or trained AI prediction. Independent field verification is required.",
+   "এটি শুধু একটি স্ক্রিনিং সূচক। এটি দূষণের পরিমাপ করা ঘনত্ব, সম্ভাবনা, সরকারি শ্রেণিবিন্যাস বা প্রশিক্ষিত AI-এর পূর্বাভাস নয়। স্বাধীনভাবে মাঠপর্যায়ে যাচাই করা প্রয়োজন।"
+  )}</div>
+  <p class="small">${tr("Additional observation: ","অতিরিক্ত পর্যবেক্ষণ: ")}${safe(notes||tr("Not provided","দেওয়া হয়নি"))}</p>
+ `;
+
+ result.classList.add("show");
+});
+
+/* =========================
+   PLASTIC LEAKAGE SCENARIO
+========================= */
+function readLeakInputs(){
+ const loadInput=document.getElementById("wasteLoad");
+ const rateInput=document.getElementById("leakRate");
+ const load=Number(loadInput.value);
+ const rate=Number(rateInput.value);
+
+ if(loadInput.value.trim()===""||rateInput.value.trim()===""||
+  !Number.isFinite(load)||!Number.isFinite(rate)||
+  load<0||load>100000000||rate<0||rate>100){
+  return null;
+ }
+ return {load,rate};
+}
+
+function calculateLeakage(){
+ const values=readLeakInputs();
+
+ if(!values){
+  alert(tr(
+   "Enter valid values: waste load from 0 to 100,000,000 kg/day and leakage rate from 0 to 100%.",
+   "সঠিক মান দিন: বর্জ্যের পরিমাণ ০ থেকে ১০০,০০০,০০০ কেজি/দিন এবং নিঃসরণের হার ০ থেকে ১০০% হতে হবে।"
+  ));
+  return;
+ }
+
+ const daily=values.load*values.rate/100;
+ const monthly=daily*30;
+ const annual=daily*365;
+
+ document.getElementById("dailyLeak").textContent=daily.toLocaleString(undefined,{maximumFractionDigits:2});
+ document.getElementById("monthlyLeak").textContent=monthly.toLocaleString(undefined,{maximumFractionDigits:1});
+ document.getElementById("annualLeak").textContent=annual.toLocaleString(undefined,{maximumFractionDigits:1});
+
+ document.getElementById("leakResult").classList.add("show");
+ updateSimulator();
+}
+
+document.getElementById("leakBtn").addEventListener("click",calculateLeakage);
+
+/* =========================
+   INTERVENTION SIMULATOR
+========================= */
+const reduction=document.getElementById("reduction");
+
+reduction.addEventListener("input",()=>{
+ document.getElementById("reductionLabel").textContent=reduction.value+"%";
+ updateSimulator();
+});
+
+document.getElementById("intervention").addEventListener("change",updateSimulator);
+
+function updateSimulator(){
+ const values=readLeakInputs();
+
+ if(!values){
+  document.getElementById("beforeValue").textContent="—";
+  document.getElementById("afterValue").textContent="—";
+  document.getElementById("savedValue").textContent="—";
+  document.getElementById("simExplanation").textContent=tr(
+   "Enter valid scenario values to compare outcomes.",
+   "ফলাফল তুলনা করতে সঠিক পরিস্থিতির তথ্য দিন।"
+  );
+  return;
+ }
+
+ const baseline=values.load*values.rate/100;
+ const percent=Number(reduction.value);
+ const after=baseline*(1-percent/100);
+ const saved=baseline-after;
+
+ document.getElementById("beforeValue").textContent=baseline.toLocaleString(undefined,{maximumFractionDigits:2});
+ document.getElementById("afterValue").textContent=after.toLocaleString(undefined,{maximumFractionDigits:2});
+ document.getElementById("savedValue").textContent=saved.toLocaleString(undefined,{maximumFractionDigits:2});
+
+ const labels={
+  collection:tr(
+   "Improved waste collection can reduce the assumed fraction of unmanaged waste.",
+   "উন্নত বর্জ্য সংগ্রহ অপর্যাপ্তভাবে ব্যবস্থাপিত বর্জ্যের অনুমানভিত্তিক অংশ কমাতে পারে।"
+  ),
+  prevention:tr(
+   "Plastic prevention can reduce the assumed amount of plastic entering the waste stream.",
+   "প্লাস্টিক ব্যবহার প্রতিরোধ বর্জ্যপ্রবাহে প্রবেশ করা প্লাস্টিকের অনুমানভিত্তিক পরিমাণ কমাতে পারে।"
+  ),
+  recovery:tr(
+   "River litter interception can reduce the assumed amount transported downstream.",
+   "নদী থেকে আবর্জনা সংগ্রহ ভাটির দিকে পরিবাহিত বর্জ্যের অনুমানভিত্তিক পরিমাণ কমাতে পারে।"
+  ),
+  combined:tr(
+   "A combined approach can distribute action across prevention, collection and recovery.",
+   "সমন্বিত উদ্যোগে প্রতিরোধ, সংগ্রহ ও পুনরুদ্ধার কার্যক্রম একসঙ্গে পরিচালনা করা যায়।"
+  )
+ };
+
+ document.getElementById("simExplanation").textContent=
+  labels[document.getElementById("intervention").value]+
+  " "+tr("Assumed reduction: ","অনুমানভিত্তিক হ্রাস: ")+percent+
+  "%. "+tr("This is a scenario, not a measured outcome.","এটি একটি কাল্পনিক পরিস্থিতি, পরিমাপ করা ফলাফল নয়।");
+}
+
+document.getElementById("wasteLoad").addEventListener("input",updateSimulator);
+document.getElementById("leakRate").addEventListener("input",updateSimulator);
+
+function updateDynamicLanguage(){
+ if(document.getElementById("calcResult").dataset.hasResult==="true"){
+  document.getElementById("calcForm").requestSubmit();
+ }
+ if(document.getElementById("leakResult").classList.contains("show")){
+  calculateLeakage();
+ }else{
+  updateSimulator();
+ }
+}
+
+/* =========================
+   INITIALISE
+========================= */
+updateCountryOptions();
+updateRiverOptions();
+updateSimulator();
+</script>
+</body>
+</html>
